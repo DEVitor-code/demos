@@ -38,6 +38,7 @@
     --fio:#A8A8A1;         /* texto secundário no escuro */
     --fio-escuro:#53534E;  /* texto secundário no claro */
     --ponteira:#D3212B;    /* a barra vermelha da faixa preta */
+    --ponteira-texto:#E8454E; /* o mesmo vermelho, mais claro, para texto sobre preto (contraste 5,4:1) */
     --wpp:#178F47;
     /* faixas: usadas como código das turmas */
     --f-branca:#F4F4EF; --f-cinza:#9AA0A6; --f-amarela:#F1C232; --f-laranja:#E8742A; --f-verde:#2E8B57;
@@ -96,7 +97,7 @@
   .marca svg{width:38px;height:38px;flex:none}
   .marca__nome{display:flex;flex-direction:column;line-height:.92}
   .marca__nome b{font-stretch:62%;font-weight:900;font-size:27px;text-transform:uppercase;letter-spacing:.01em}
-  .marca__nome small{font-size:11.5px;font-weight:700;color:var(--ponteira)}
+  .marca__nome small{font-size:11.5px;font-weight:700;color:var(--ponteira-texto)}
   .menu{display:none;gap:clamp(18px,2vw,30px)}
   .menu a{position:relative;text-decoration:none;font-size:15px;font-weight:600;padding:8px 0}
   .menu a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;background:linear-gradient(90deg,var(--algodao) 0 calc(100% - 9px),var(--ponteira) 0);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
@@ -178,7 +179,7 @@
   .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;padding-top:calc(var(--topo) + clamp(28px,6vh,64px));overflow:hidden;overflow:clip;isolation:isolate}
   .hero__txt{position:relative;z-index:2}
   .hero__titulo{font-size:clamp(54px,16.4vw,92px)}
-  .hero__titulo .ponto{color:var(--ponteira)}
+  .hero__titulo .ponto{color:var(--ponteira-texto)}
   .hero__sub{max-width:36ch;margin-top:22px;font-size:clamp(17px,1.35vw,19px);color:#CBCBC4}
   .hero__acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
   .hero__foto{position:relative;margin-top:24px;height:min(120vw,66svh)}
