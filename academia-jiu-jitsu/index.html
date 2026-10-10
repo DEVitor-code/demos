@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guarda Jiu-Jitsu: turmas infantis e adulto</title>
+<meta name="description" content="Jiu-jitsu para crianças a partir de 4 anos e adultos que nunca treinaram. Turmas separadas por idade e primeira aula grátis, agendada pelo WhatsApp.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23000'/%3E%3Cpath d='M3 14h34v7H3z' fill='%23111' stroke='%23ECECE6' stroke-width='1.6'/%3E%3Cpath d='M16 21h5l-7 16H9zM19 21h5l7 16h-5z' fill='%23111' stroke='%23ECECE6' stroke-width='1.6' stroke-linejoin='round'/%3E%3Crect x='15' y='10.5' width='10' height='13' rx='1.5' fill='%23111' stroke='%23ECECE6' stroke-width='1.6'/%3E%3Cpath d='M23.4 31h5l1.3 3h-5z' fill='%23D3212B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&text=%E6%9F%94%E8%A1%93&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-queda.webp" fetchpriority="high">
+<script>
+  // Só anima quando a pessoa não pediu movimento reduzido. Se o GSAP não carregar, a página aparece normal.
+  (function () {
+    var d = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    d.classList.add('anim');
+    setTimeout(function () { if (!window.__animPronta) d.classList.remove('anim'); }, 3500);
+  })();
+</script>
+<style>
+  :root{
+    --preto:#000;
+    --carvao:#141414;
+    --borda:#2b2b2b;
+    --algodao:#ECECE6;     /* algodão do kimono */
+    --fio:#A8A8A1;         /* texto secundário no escuro */
+    --fio-escuro:#53534E;  /* texto secundário no claro */
+    --ponteira:#D3212B;    /* a barra vermelha da faixa preta */
+    --wpp:#178F47;
+    /* faixas: usadas como código das turmas */
+    --f-branca:#F4F4EF; --f-cinza:#9AA0A6; --f-amarela:#F1C232; --f-laranja:#E8742A; --f-verde:#2E8B57;
+    --f-azul:#1F58B5; --f-roxa:#6A3D9E; --f-marrom:#6E4528; --f-preta:#101010;
+    --gutter:clamp(16px,4.5vw,64px);
+    --max:1320px;
+    --topo:68px;
+    --ease:cubic-bezier(.2,.7,.1,1);
+    --sec:clamp(72px,10vw,140px);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  .lenis.lenis-stopped{overflow:hidden}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--preto);color:var(--algodao);font:400 17px/1.6 "Archivo",system-ui,sans-serif;font-stretch:100%;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--ponteira);outline-offset:3px}
+  [tabindex="-1"]:focus{outline:none}
+  .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .pular{position:fixed;left:16px;top:-80px;z-index:100;background:var(--algodao);color:#000;padding:12px 16px;font-weight:700;text-decoration:none}
+  .pular:focus{top:16px}
+  .defs{position:absolute;width:0;height:0;overflow:hidden}
+
+  /* tipografia de cartaz: Archivo comprimido, como nas referências */
+  .display,.titulo{font-stretch:62%;font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em}
+  .titulo{font-size:clamp(44px,7.2vw,104px);max-width:14ch}
+  .linha{display:block;overflow:hidden;padding:.12em 0 .06em;margin:-.12em 0 -.06em}
+  .linha > span{display:block;transform-origin:0 100%}
+  .sec-cab{display:grid;gap:18px;align-items:end}
+  @media (min-width:900px){.sec-cab{grid-template-columns:1.25fr .75fr;gap:48px}}
+  .intro{font-size:clamp(17px,1.35vw,19px);max-width:44ch;color:var(--fio)}
+  .claro{background-color:var(--algodao);color:#000;
+    /* trama pérola do kimono */
+    background-image:radial-gradient(rgba(0,0,0,.055) 1px,transparent 1.5px);background-size:5px 5px}
+  .claro .intro{color:var(--fio-escuro)}
+
+  /* ---------- faixa de progresso no topo: branca até a preta, 4 graus por faixa ---------- */
+  .progresso{position:fixed;top:0;left:0;right:0;height:6px;z-index:70;background:var(--f-branca);transition:background-color .4s}
+  .progresso.preta{box-shadow:inset 0 -1px 0 rgba(255,255,255,.25)}
+  .progresso__ponta{position:absolute;right:clamp(16px,6vw,80px);top:0;bottom:0;width:44px;background:#000;display:flex;justify-content:flex-end;gap:3px;padding:0 5px}
+  .progresso.preta .progresso__ponta{background:var(--ponteira)}
+  .progresso__ponta i{width:3px;background:#fff;transform:scaleY(0);transform-origin:top;transition:transform .25s}
+  .progresso__ponta i.on{transform:scaleY(1)}
+
+  /* ---------- topo ---------- */
+  .topo{position:fixed;inset:0 0 auto;z-index:60;height:var(--topo);padding-top:6px;border-bottom:1px solid transparent;transition:background-color .35s,border-color .35s,transform .5s var(--ease)}
+  .topo.solido{background:rgba(0,0,0,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-color:rgba(255,255,255,.08)}
+  .topo.escondido{transform:translateY(-100%)}
+  .topo__in{height:100%;display:flex;align-items:center;gap:clamp(12px,2.4vw,32px)}
+  .marca{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto;color:var(--algodao)}
+  .marca svg{width:38px;height:38px;flex:none}
+  .marca__nome{display:flex;flex-direction:column;line-height:.92}
+  .marca__nome b{font-stretch:62%;font-weight:900;font-size:27px;text-transform:uppercase;letter-spacing:.01em}
+  .marca__nome small{font-size:11.5px;font-weight:700;color:var(--ponteira)}
+  .menu{display:none;gap:clamp(18px,2vw,30px)}
+  .menu a{position:relative;text-decoration:none;font-size:15px;font-weight:600;padding:8px 0}
+  .menu a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;background:linear-gradient(90deg,var(--algodao) 0 calc(100% - 9px),var(--ponteira) 0);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+  .menu a:hover::after,.menu a[aria-current="true"]::after{transform:scaleX(1)}
+  .menu-btn{display:grid;place-items:center;width:46px;height:46px;border:0;background:transparent;cursor:pointer;margin-right:-8px}
+  .menu-btn span,.menu-btn span::before,.menu-btn span::after{display:block;width:24px;height:3px;background:var(--algodao)}
+  .menu-btn span{position:relative;transition:background-color .2s}
+  .menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0;transition:transform .4s var(--ease)}
+  .menu-btn span::before{top:-8px}
+  .menu-btn span::after{top:8px}
+  .menu-btn[aria-expanded="true"] span{background:transparent}
+  .menu-btn[aria-expanded="true"] span::before{transform:translateY(8px) rotate(45deg)}
+  .menu-btn[aria-expanded="true"] span::after{transform:translateY(-8px) rotate(-45deg)}
+  .so-curto{display:none}
+  @media (max-width:560px){.topo .btn-faixa .so-longo{display:none}.topo .btn-faixa .so-curto{display:inline}}
+  @media (max-width:400px){
+    .topo .btn-faixa .btn-faixa__txt svg{display:none}
+    .topo .btn-faixa--sm .btn-faixa__ponta{width:30px;margin:4px 8px 4px 0;gap:2px;padding:0 5px}
+  }
+  @media (min-width:1040px){.menu{display:flex}.menu-btn{display:none}}
+
+  .gaveta{position:fixed;inset:0;z-index:55;background:var(--preto);display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:calc(var(--topo) + 32px) var(--gutter) 28px;visibility:hidden;opacity:0;transition:opacity .3s,visibility 0s .3s}
+  .gaveta.aberta{visibility:visible;opacity:1;transition:opacity .3s}
+  .gaveta nav{display:flex;flex-direction:column}
+  .gaveta nav a{font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:clamp(46px,13vw,84px);line-height:1;text-decoration:none;padding:8px 0;border-bottom:1px solid var(--borda)}
+  .gaveta p{color:var(--fio);font-size:15px}
+
+  /* ---------- botão faixa: corpo de faixa branca com a ponta preta; no hover ganha os 4 graus ---------- */
+  .btn-faixa{--corpo:var(--algodao);--txt:#000;--ponta:#000;--grau:var(--algodao);--costura:rgba(0,0,0,.1);
+    position:relative;display:inline-flex;align-items:stretch;height:58px;border:0;border-radius:2px;cursor:pointer;text-decoration:none;white-space:nowrap;
+    background-color:var(--corpo);color:var(--txt);font-weight:700;font-size:16px;
+    background-image:linear-gradient(to bottom,transparent 8px,var(--costura) 8px 9px,transparent 9px calc(100% - 9px),var(--costura) calc(100% - 9px) calc(100% - 8px),transparent 0);
+    transition:transform .3s var(--ease),box-shadow .3s}
+  .btn-faixa__txt{display:flex;align-items:center;gap:10px;padding:0 20px}
+  .btn-faixa__txt svg{width:20px;height:20px;flex:none}
+  .btn-faixa__ponta{flex:none;width:56px;margin:5px 14px 5px 0;background:var(--ponta);display:flex;justify-content:center;gap:5px;padding:0 9px}
+  .btn-faixa__ponta i{width:4px;background:var(--grau);transform:scaleY(0);transform-origin:50% 100%;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+  .btn-faixa:hover .btn-faixa__ponta i,.btn-faixa:focus-visible .btn-faixa__ponta i{transform:scaleY(1)}
+  .btn-faixa:hover .btn-faixa__ponta i:nth-child(2),.btn-faixa:focus-visible .btn-faixa__ponta i:nth-child(2){transition-delay:.08s}
+  .btn-faixa:hover .btn-faixa__ponta i:nth-child(3),.btn-faixa:focus-visible .btn-faixa__ponta i:nth-child(3){transition-delay:.16s}
+  .btn-faixa:hover .btn-faixa__ponta i:nth-child(4),.btn-faixa:focus-visible .btn-faixa__ponta i:nth-child(4){transition-delay:.24s}
+  .btn-faixa:hover{box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+  .btn-faixa:active{transform:scaleX(.97)}
+  .btn-faixa--preta{--corpo:#0c0c0c;--txt:var(--algodao);--ponta:var(--ponteira);--grau:#fff;--costura:rgba(255,255,255,.13)}
+  .btn-faixa--sm{height:44px;font-size:14px}
+  .btn-faixa--sm .btn-faixa__txt{padding:0 14px;gap:8px}
+  .btn-faixa--sm .btn-faixa__txt svg{width:17px;height:17px}
+  .btn-faixa--sm .btn-faixa__ponta{width:40px;margin:4px 10px 4px 0;gap:3px;padding:0 7px}
+  .btn-faixa--sm .btn-faixa__ponta i{width:3px}
+  @media (hover:none){.btn-faixa .btn-faixa__ponta i{transform:scaleY(1)}}
+
+  /* ---------- botão linha: a borda se amarra em volta, como a faixa na cintura ---------- */
+  @property --l1{syntax:'<percentage>';inherits:false;initial-value:0%}
+  @property --l2{syntax:'<percentage>';inherits:false;initial-value:0%}
+  @property --l3{syntax:'<percentage>';inherits:false;initial-value:0%}
+  @property --l4{syntax:'<percentage>';inherits:false;initial-value:0%}
+  .btn-linha{--ln:var(--algodao);--base:rgba(236,236,230,.32);
+    position:relative;display:inline-flex;align-items:center;height:58px;padding:0 24px;text-decoration:none;font-weight:700;font-size:16px;white-space:nowrap;
+    box-shadow:inset 0 0 0 1.5px var(--base);
+    background-image:linear-gradient(var(--ln),var(--ln)),linear-gradient(var(--ln),var(--ln)),linear-gradient(var(--ln),var(--ln)),linear-gradient(var(--ln),var(--ln));
+    background-repeat:no-repeat;background-position:left top,right top,right bottom,left bottom;
+    background-size:var(--l1) 2px,2px var(--l2),var(--l3) 2px,2px var(--l4);
+    transition:--l1 .14s linear .34s,--l2 .1s linear .24s,--l3 .14s linear .1s,--l4 .1s linear 0s}
+  .btn-linha:hover,.btn-linha:focus-visible{--l1:100%;--l2:100%;--l3:100%;--l4:100%;
+    transition:--l1 .14s linear 0s,--l2 .1s linear .14s,--l3 .14s linear .24s,--l4 .1s linear .38s}
+  .btn-linha__txt{display:block;overflow:hidden;line-height:1.3;position:relative}
+  .btn-linha__txt span{display:block;transition:transform .5s var(--ease)}
+  .btn-linha__txt::after{content:attr(data-txt);content:attr(data-txt) / "";position:absolute;left:0;top:100%;transition:transform .5s var(--ease)}
+  .btn-linha:hover .btn-linha__txt span,.btn-linha:hover .btn-linha__txt::after,
+  .btn-linha:focus-visible .btn-linha__txt span,.btn-linha:focus-visible .btn-linha__txt::after{transform:translateY(-100%)}
+
+  /* ---------- pincelada vermelha (o filtro SVG dá a borda seca do pincel) ---------- */
+  .pincel{position:absolute;display:block;overflow:visible;pointer-events:none}
+  .pincel path{fill:none;stroke:var(--ponteira);stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:0}
+  .pincel .t1{stroke-width:150}
+  .pincel .t2{stroke-width:46}
+
+  /* ---------- abertura ---------- */
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;padding-top:calc(var(--topo) + clamp(28px,6vh,64px));overflow:hidden;overflow:clip;isolation:isolate}
+  .hero__txt{position:relative;z-index:2}
+  .hero__titulo{font-size:clamp(54px,16.4vw,92px)}
+  .hero__titulo .ponto{color:var(--ponteira)}
+  .hero__sub{max-width:36ch;margin-top:22px;font-size:clamp(17px,1.35vw,19px);color:#CBCBC4}
+  .hero__acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .hero__foto{position:relative;margin-top:24px;height:min(120vw,66svh)}
+  .hero__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:62% 100%;mix-blend-mode:lighten}
+  .hero__foto .pincel{left:-8%;width:116%;top:34%;height:34%;transform:rotate(-15deg)}
+  .hero__kanji{position:absolute;right:2%;top:0;font-family:"Noto Serif JP",serif;font-weight:900;writing-mode:vertical-rl;font-size:clamp(84px,20vh,240px);line-height:1;color:rgba(236,236,230,.07);pointer-events:none;user-select:none}
+  .hero-card{position:relative;z-index:3;align-self:flex-end;margin:-64px var(--gutter) 28px 0;display:flex;align-items:center;gap:14px;padding:10px;background:rgba(20,20,20,.88);border:1px solid var(--borda);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);text-decoration:none;max-width:360px}
+  .hero-card__fotos{display:flex;flex:none}
+  .hero-card__fotos img{width:52px;height:65px;object-fit:cover;filter:grayscale(1);transition:transform .5s var(--ease),filter .5s}
+  .hero-card__fotos img + img{margin-left:-12px;box-shadow:-2px 0 0 #141414}
+  .hero-card:hover .hero-card__fotos img{filter:none}
+  .hero-card:hover .hero-card__fotos img:first-child{transform:rotate(-7deg) translateX(-4px)}
+  .hero-card:hover .hero-card__fotos img:last-child{transform:rotate(6deg) translateX(6px)}
+  .hero-card__txt{font-size:13.5px;line-height:1.35;color:var(--fio)}
+  .hero-card__txt b{display:block;color:var(--algodao);font-size:15px;margin-bottom:2px}
+  .mais{position:relative;flex:none;width:42px;min-height:42px;align-self:stretch;background:var(--ponteira)}
+  .mais::before,.mais::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:2.5px;margin:-1.25px 0 0 -8px;background:#fff;transition:transform .45s var(--ease)}
+  .mais::after{transform:rotate(90deg)}
+  .hero-card:hover .mais::before{transform:rotate(90deg)}
+  .hero-card:hover .mais::after{transform:rotate(180deg)}
+  .hero__role{display:none}
+  @media (min-width:900px){
+    .hero{justify-content:center;padding-bottom:96px}
+    .hero__titulo{font-size:clamp(84px,9.4vw,148px)}
+    .hero__wrap{max-width:min(58vw,800px)}
+    .hero__foto{position:absolute;z-index:-1;right:0;top:0;bottom:0;width:54vw;height:auto;margin:0}
+    .hero__foto img{object-position:58% 100%;top:var(--topo);height:calc(100% - var(--topo))}
+    .hero__foto .pincel{left:2%;width:92%;top:36%;height:30%;transform:rotate(-16deg)}
+    .hero__kanji{right:3vw;top:calc(var(--topo) + 3vh)}
+    .hero-card{position:absolute;right:var(--gutter);bottom:36px;margin:0}
+    .hero__role{position:absolute;left:var(--gutter);bottom:36px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--fio)}
+    .hero__role i{position:relative;width:2px;height:42px;background:rgba(236,236,230,.18);overflow:hidden}
+    .hero__role i::after{content:"";position:absolute;inset:0;background:var(--algodao);transform:translateY(-100%);animation:role 2.4s var(--ease) infinite}
+  }
+  @keyframes role{0%{transform:translateY(-100%)}55%{transform:translateY(0)}100%{transform:translateY(100%)}}
+  @media (prefers-reduced-motion:reduce){.hero__role i::after{animation:none;transform:none}}
+
+  /* ---------- faixas cruzadas (o "nó" entre a abertura e o resto) ---------- */
+  .cruzadas{position:relative;z-index:3;height:clamp(140px,19vw,230px);background:linear-gradient(var(--preto) 50%,var(--algodao) 50%);overflow:hidden;overflow:clip}
+  .correia{--h:clamp(46px,5.2vw,66px);position:absolute;left:-6%;right:-6%;top:50%;height:var(--h);margin-top:calc(var(--h) / -2);overflow:hidden;
+    background-image:linear-gradient(to bottom,transparent 9px,var(--costura) 9px 10px,transparent 10px calc(100% - 10px),var(--costura) calc(100% - 10px) calc(100% - 9px),transparent 0)}
+  .correia--branca{--costura:rgba(0,0,0,.12);background-color:var(--f-branca);color:#000;transform:rotate(-3deg);box-shadow:0 18px 30px -12px rgba(0,0,0,.45)}
+  .correia--preta{--costura:rgba(255,255,255,.14);background-color:#0b0b0b;color:var(--algodao);transform:rotate(2.4deg);box-shadow:0 18px 30px -12px rgba(0,0,0,.5)}
+  .correia__trilho{display:flex;height:100%;width:max-content;will-change:transform}
+  .correia__item{display:flex;align-items:center;gap:clamp(18px,2.4vw,34px);padding-right:clamp(18px,2.4vw,34px);height:100%;white-space:nowrap;font-stretch:72%;font-weight:800;text-transform:uppercase;font-size:clamp(15px,1.6vw,21px);letter-spacing:.02em}
+  .correia__ponta{display:flex;justify-content:center;gap:4px;height:100%;width:52px;padding:0 8px;background:#000}
+  .correia--preta .correia__ponta{background:var(--ponteira)}
+  .correia__ponta i{width:4px;background:#fff}
+
+  /* ---------- motivos ---------- */
+  .motivos{padding:var(--sec) 0}
+  .motivos__grade{display:grid;margin-top:clamp(40px,6vw,72px);border-top:2px solid #000}
+  @media (min-width:700px){.motivos__grade{grid-template-columns:1fr 1fr;column-gap:32px}}
+  @media (min-width:1100px){.motivos__grade{grid-template-columns:repeat(4,1fr);column-gap:0}}
+  .motivo{padding:28px 0 34px;border-bottom:1px solid rgba(0,0,0,.14)}
+  @media (min-width:1100px){.motivo{border-bottom:0;padding-right:28px}.motivo + .motivo{border-left:1px solid rgba(0,0,0,.14);padding-left:28px}}
+  .motivo__faixa{display:block;height:12px;width:96px;background:var(--c);position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);margin-bottom:22px;transform-origin:left}
+  .motivo__faixa::after{content:"";position:absolute;right:12px;top:0;bottom:0;width:18px;background:#000}
+  .motivo h3{font-stretch:75%;font-weight:800;font-size:clamp(24px,2.1vw,29px);line-height:1.04}
+  .motivo p{margin-top:10px;color:var(--fio-escuro);max-width:40ch}
+
+  /* ---------- arte suave em quatro tempos ---------- */
+  .tempos{position:relative;background:var(--preto);padding:var(--sec) 0;overflow:hidden;overflow:clip}
+  .tempos__palco{position:relative;margin-top:48px}
+  .tempos__lista{list-style:none;display:grid;gap:64px}
+  .tempo{display:grid;gap:16px 56px;grid-template-areas:"n" "foto" "txt";align-items:center}
+  @media (min-width:800px){.tempo{grid-template-columns:1fr 1fr;grid-template-areas:"foto n" "foto txt";align-items:end}}
+  .tempo__n{grid-area:n;font-stretch:62%;font-weight:900;font-size:clamp(64px,8vw,120px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(236,236,230,.55)}
+  .tempo__foto{grid-area:foto;position:relative;aspect-ratio:3/4;max-height:72svh;width:100%}
+  .tempo__foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten}
+  .tempo__txt{grid-area:txt;align-self:start}
+  .tempo h3{font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:clamp(46px,5.6vw,84px);line-height:.88}
+  .tempo__lema{font-weight:700;font-size:clamp(18px,1.6vw,22px);margin-top:14px}
+  .tempo__desc{color:var(--fio);margin-top:8px;max-width:40ch}
+  .tempos__pincel,.tempos__nav{display:none}
+
+  /* modo fixo (só com JS e movimento liberado) */
+  .tempos.is-pin{height:100svh;padding:0}
+  .is-pin .tempos__fixo{height:100%;display:flex;flex-direction:column;padding:calc(var(--topo) + 18px) 0 18px}
+  .is-pin .tempos__cab .titulo{font-size:clamp(36px,9.6vw,72px);max-width:none}
+  .is-pin .tempos__cab .intro{display:none}
+  .is-pin .tempos__palco{flex:1;min-height:0;margin-top:14px}
+  .is-pin .tempos__lista{height:100%;gap:0;grid-template-areas:"s"}
+  .is-pin .tempo{grid-area:s;height:100%;min-height:0;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;grid-template-areas:"foto" "txt";gap:10px;align-items:stretch}
+  .is-pin .tempo__n{position:absolute;left:var(--gutter);top:0;z-index:2;font-size:clamp(56px,16vw,96px)}
+  .is-pin .tempo__foto{aspect-ratio:auto;max-height:none;height:100%;min-height:0}
+  .is-pin .tempo__txt{align-self:end;min-height:0}
+  .is-pin .tempo h3{font-size:clamp(40px,11vw,64px)}
+  .is-pin .tempo__lema{margin-top:8px}
+  .is-pin .tempo__desc{font-size:15.5px;line-height:1.5}
+  .is-pin .tempos__pincel{display:block;left:-12%;width:124%;top:16%;height:36%;transform:rotate(-12deg)}
+  .is-pin .tempos__nav{display:block;margin-top:16px}
+  .tempos__trilha{position:relative;height:10px;background:rgba(236,236,230,.14)}
+  .tempos__fill{position:absolute;inset:0;background:var(--algodao);transform:scaleX(0);transform-origin:left}
+  .tempos__ponta{position:absolute;right:18px;top:-3px;bottom:-3px;width:46px;background:#000;box-shadow:0 0 0 1px rgba(236,236,230,.3);display:flex;justify-content:center;gap:4px;padding:0 7px}
+  .tempos__ponta i{width:4px;background:var(--algodao);transform:scaleY(0)}
+  .tempos__nav ol{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin-top:8px}
+  .tempos__nav button{appearance:none;border:0;background:none;cursor:pointer;text-align:left;font-size:13px;font-weight:600;color:var(--fio);padding:6px 4px 2px 0;transition:color .3s}
+  .tempos__nav button[aria-current="step"],.tempos__nav button:hover{color:var(--algodao)}
+  @media (max-width:420px){.tempos__num{display:none}}
+  @media (min-width:900px){
+    .is-pin .tempos__cab .intro{display:block;font-size:16px}
+    .is-pin .tempos__cab .titulo{font-size:clamp(48px,4.8vw,76px)}
+    .is-pin .tempo{grid-template-columns:minmax(0,.62fr) minmax(0,1.3fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);grid-template-areas:"n foto txt";gap:clamp(24px,4vw,64px);align-items:center}
+    .is-pin .tempo__n{position:static;align-self:end;font-size:clamp(120px,15vw,240px);line-height:.78}
+    .is-pin .tempo__txt{align-self:center}
+    .is-pin .tempo h3{font-size:clamp(52px,5vw,84px)}
+    .is-pin .tempo__desc{font-size:17px}
+    .is-pin .tempos__pincel{left:24%;width:40%;top:30%;height:32%;transform:rotate(-14deg)}
+    .tempos__nav button{font-size:14px}
+  }
+
+  /* ---------- turmas ---------- */
+  .turmas{padding:var(--sec) 0}
+  .turmas__cards{display:flex;gap:12px;margin:40px calc(var(--gutter) * -1) 0;padding:6px var(--gutter) 12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--gutter);scrollbar-width:none}
+  .turmas__cards::-webkit-scrollbar{display:none}
+  @media (min-width:900px){.turmas__cards{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:48px 0 0;padding:8px 0 0;overflow:visible}}
+  .turma-card{flex:0 0 min(60vw,250px);scroll-snap-align:start;appearance:none;border:0;background:#fff;color:#000;text-align:left;cursor:pointer;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.12);transition:box-shadow .3s,transform .5s var(--ease)}
+  .turma-card__foto{display:block;aspect-ratio:4/5;overflow:hidden;background:#111}
+  .turma-card__foto img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transform:scale(1.02);transition:filter .5s,transform .9s var(--ease)}
+  .turma-card:hover .turma-card__foto img,.turma-card:focus-visible .turma-card__foto img{filter:grayscale(0);transform:scale(1.07)}
+  .turma-card[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ponteira);transform:translateY(-6px)}
+  .turma-card[aria-pressed="true"] .turma-card__foto img{filter:none}
+  .turma-card__faixa{display:flex;height:10px;transform-origin:left}
+  .turma-card__faixa span{flex:1;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.18)}
+  .turma-card__txt{display:flex;flex-direction:column;gap:4px;padding:14px 16px 18px}
+  .turma-card__nome{font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:clamp(28px,2.4vw,34px);line-height:.9}
+  .turma-card__idade{font-size:15px;color:var(--fio-escuro);line-height:1.3}
+  .turma-card .mais{position:absolute;top:10px;right:10px;width:40px;height:40px;min-height:0;border-radius:50%;background:var(--algodao);transition:background-color .3s}
+  .turma-card .mais::before,.turma-card .mais::after{background:#000;transition:transform .45s cubic-bezier(.4,1.6,.5,1),width .3s,background-color .3s}
+  .turma-card .mais::before{transform:translate(0,0) rotate(0deg)}
+  .turma-card .mais::after{transform:translate(0,0) rotate(90deg)}
+  .turma-card[aria-pressed="true"] .mais{background:var(--ponteira)}
+  .turma-card[aria-pressed="true"] .mais::before{width:7px;background:#fff;transform:translate(1px,4px) rotate(45deg)}
+  .turma-card[aria-pressed="true"] .mais::after{width:15px;background:#fff;transform:translate(4.5px,1px) rotate(-48deg)}
+
+  .turma-painel{margin-top:22px;background:#000;color:var(--algodao);display:grid}
+  @media (min-width:900px){.turma-painel{grid-template-columns:1.2fr 1fr}}
+  .turma-painel__a,.turma-painel__b{padding:clamp(24px,4vw,52px)}
+  .turma-painel__b{border-top:1px solid var(--borda)}
+  @media (min-width:900px){.turma-painel__b{border-top:0;border-left:1px solid var(--borda)}}
+  .turma-painel__idade{color:var(--fio);font-size:16px}
+  .turma-painel h3{font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:clamp(48px,6vw,88px);line-height:.88;margin-top:6px}
+  .turma-painel__desc{margin-top:18px;max-width:48ch;color:#CFCFC8}
+  .faixas{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:26px}
+  .faixas .f{width:58px;height:14px;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+  .faixas .f::after{content:"";position:absolute;right:8px;top:2px;bottom:2px;width:14px;background:#000}
+  .faixas .f.preta::after{background:var(--ponteira)}
+  .faixas small{font-size:14px;color:var(--fio);margin-left:6px}
+  .horarios{list-style:none}
+  .horarios li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--borda)}
+  .horarios .h{font-stretch:70%;font-weight:800;font-size:clamp(24px,2.2vw,30px);line-height:1;white-space:nowrap}
+  .turma-painel .btn-faixa{margin-top:28px;width:100%;white-space:normal;height:auto;min-height:58px}
+  .turma-painel .btn-faixa__txt{flex:1;padding-top:12px;padding-bottom:12px;line-height:1.25}
+  .turma-painel__nota{font-size:14px;color:var(--fio);margin-top:10px}
+
+  /* ---------- primeira aula ---------- */
+  .primeira{padding:var(--sec) 0}
+  .passos{position:relative;margin-top:56px}
+  .passos__trilha{position:absolute;left:19px;top:0;bottom:0;width:10px;background:rgba(236,236,230,.14)}
+  .passos__fill{position:absolute;inset:0;background:var(--algodao);transform-origin:top}
+  .passos__ponta{position:absolute;left:-3px;right:-3px;bottom:0;height:46px;background:#000;box-shadow:0 0 0 1px rgba(236,236,230,.35);display:flex;flex-direction:column;justify-content:center;gap:4px;padding:7px 0}
+  .passos__ponta i{height:4px;background:var(--algodao)}
+  .passos ol{list-style:none;display:grid;gap:44px;position:relative}
+  .passo{position:relative;padding-left:68px}
+  .passo__n{position:absolute;left:0;top:0;width:48px;height:48px;display:grid;place-items:center;background:#000;border:2px solid var(--algodao);font-stretch:62%;font-weight:900;font-size:26px;transition:background-color .35s,color .35s}
+  .passo.ativo .passo__n{background:var(--algodao);color:#000}
+  .passo h3{font-stretch:75%;font-weight:800;font-size:clamp(24px,2.1vw,29px);line-height:1.05;padding-top:8px}
+  .passo p{color:var(--fio);margin-top:8px;max-width:32ch}
+  @media (min-width:900px){
+    .passos__trilha{left:0;right:0;top:19px;bottom:auto;width:auto;height:10px}
+    .passos__fill{transform-origin:left}
+    .passos__ponta{left:auto;right:0;top:-3px;bottom:-3px;height:auto;width:46px;flex-direction:row;padding:0 7px}
+    .passos__ponta i{height:auto;width:4px}
+    .passos ol{grid-template-columns:repeat(4,1fr);gap:32px}
+    .passo{padding:76px 0 0}
+  }
+
+  /* ---------- professor ---------- */
+  .professor{padding:var(--sec) 0;overflow:hidden;overflow:clip}
+  .professor__grade{display:grid;gap:64px;align-items:center}
+  @media (min-width:900px){.professor__grade{grid-template-columns:1fr 1fr;gap:clamp(48px,7vw,112px)}}
+  .professor__fotos{position:relative;width:min(100%,540px);margin:0 auto 24px}
+  .professor__fotos .pincel{left:-18%;width:132%;top:26%;height:44%;transform:rotate(-11deg)}
+  .professor__foto{position:relative;aspect-ratio:4/5;
+    clip-path:polygon(0.0% 0.4%,3.6% 1.2%,7.1% 0.8%,10.7% 1.0%,14.3% 0.5%,17.9% 1.3%,21.4% 0.2%,25.0% 1.1%,28.6% 0.6%,32.1% 1.7%,35.7% 0.1%,39.3% 0.7%,42.9% 0.1%,46.4% 1.8%,50.0% 0.6%,53.6% 0.1%,57.1% 0.9%,60.7% 2.1%,64.3% 0.6%,67.9% 1.4%,71.4% 0.1%,75.0% 0.0%,78.6% 0.5%,82.1% 0.1%,85.7% 0.2%,89.3% 0.5%,92.9% 0.0%,96.4% 1.0%,99.7% 0.0%,98.5% 2.9%,99.6% 5.9%,98.9% 8.8%,99.6% 11.8%,98.8% 14.7%,99.7% 17.6%,99.5% 20.6%,99.3% 23.5%,98.2% 26.5%,99.4% 29.4%,98.8% 32.4%,99.8% 35.3%,99.6% 38.2%,99.8% 41.2%,99.9% 44.1%,99.4% 47.1%,99.3% 50.0%,99.4% 52.9%,99.3% 55.9%,99.3% 58.8%,98.5% 61.8%,100.0% 64.7%,99.6% 67.6%,99.3% 70.6%,99.2% 73.5%,99.3% 76.5%,99.3% 79.4%,99.9% 82.4%,98.9% 85.3%,99.4% 88.2%,99.5% 91.2%,99.9% 94.1%,99.4% 97.1%,100.0% 99.1%,96.4% 98.3%,92.9% 99.9%,89.3% 99.5%,85.7% 99.9%,82.1% 99.9%,78.6% 99.3%,75.0% 99.6%,71.4% 99.5%,67.9% 99.0%,64.3% 99.8%,60.7% 98.4%,57.1% 99.9%,53.6% 98.6%,50.0% 99.9%,46.4% 99.1%,42.9% 99.8%,39.3% 99.4%,35.7% 99.1%,32.1% 98.2%,28.6% 99.7%,25.0% 98.1%,21.4% 99.8%,17.9% 99.1%,14.3% 99.2%,10.7% 98.6%,7.1% 99.9%,3.6% 97.8%,0.2% 100.0%,0.5% 97.1%,0.6% 94.1%,0.6% 91.2%,0.2% 88.2%,0.1% 85.3%,0.1% 82.4%,1.0% 79.4%,0.2% 76.5%,1.1% 73.5%,0.3% 70.6%,0.8% 67.6%,0.7% 64.7%,0.9% 61.8%,0.4% 58.8%,1.5% 55.9%,0.1% 52.9%,0.3% 50.0%,0.7% 47.1%,1.4% 44.1%,0.2% 41.2%,0.3% 38.2%,0.5% 35.3%,1.7% 32.4%,0.1% 29.4%,1.7% 26.5%,0.6% 23.5%,1.1% 20.6%,0.3% 17.6%,0.2% 14.7%,0.0% 11.8%,1.7% 8.8%,0.2% 5.9%,1.2% 2.9%)}
+  .professor__foto img{width:100%;height:100%;object-fit:cover}
+  .professor__detalhe{position:absolute;z-index:2;width:40%;right:-5%;bottom:-7%;border:6px solid #fff;box-shadow:0 24px 40px -12px rgba(0,0,0,.4);transform:rotate(4deg)}
+  .professor__nome{font-weight:700;font-size:19px;margin-top:18px}
+  .professor__bio{margin-top:10px;max-width:46ch;color:#2E2E2B}
+  .lista-faixa{list-style:none;margin-top:24px;display:grid;gap:10px}
+  .lista-faixa li{position:relative;padding-left:36px}
+  /* marcador: mini faixa preta com a ponteira vermelha */
+  .lista-faixa li::before{content:"";position:absolute;left:0;top:.5em;width:24px;height:9px;background:#000;box-shadow:inset -3px 0 0 #000,inset -10px 0 0 var(--ponteira)}
+  .numeros{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;padding-top:22px;border-top:2px solid #000}
+  .numeros div{display:flex;flex-direction:column}
+  .numeros dd{order:-1;font-stretch:62%;font-weight:900;font-size:clamp(46px,5vw,72px);line-height:.9}
+  .numeros dt{font-size:14px;line-height:1.35;color:var(--fio-escuro);margin-top:8px}
+
+  /* ---------- galeria ---------- */
+  .galeria{padding:var(--sec) 0;overflow:hidden;overflow:clip}
+  .galeria__trilho{--borda-pag:max(var(--gutter),calc((100vw - var(--max)) / 2 + var(--gutter)));display:flex;gap:16px;margin-top:44px;padding:0 var(--borda-pag) 10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--borda-pag);scrollbar-width:none}
+  .galeria__trilho::-webkit-scrollbar{display:none}
+  .galeria__trilho.scrub{overflow:visible;scroll-snap-type:none;width:max-content;will-change:transform}
+  .galeria__item{flex:none;scroll-snap-align:start}
+  .galeria__item img{height:clamp(200px,56vw,500px);width:auto;max-width:none;filter:grayscale(1) contrast(1.05);transition:filter .6s}
+  .galeria__item:hover img{filter:none}
+  .galeria__item figcaption{font-size:14px;color:var(--fio);margin-top:10px}
+  .galeria.is-pin{height:100svh;padding:calc(var(--topo) + 20px) 0 28px;display:flex;flex-direction:column;justify-content:center}
+  .galeria.is-pin .titulo{font-size:clamp(44px,5vw,80px)}
+  .galeria.is-pin .galeria__trilho{margin-top:32px}
+  .galeria.is-pin .galeria__item img{height:clamp(240px,50svh,520px)}
+
+  /* ---------- depoimentos e dúvidas ---------- */
+  .depo{padding:var(--sec) 0 0}
+  .nota-google{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;margin-top:30px}
+  .nota-google__num{font-stretch:62%;font-weight:900;font-size:clamp(84px,9vw,132px);line-height:.8}
+  .estrelas{position:relative;width:150px;height:28px}
+  .estrelas svg{position:absolute;left:0;top:0;width:150px;height:28px}
+  .estrelas__cheia{position:absolute;inset:0;width:98%;overflow:hidden}
+  .nota-google p{color:var(--fio-escuro);font-size:15px;margin-top:6px}
+  .depos{display:grid;gap:16px;margin-top:40px}
+  @media (min-width:900px){.depos{grid-template-columns:repeat(3,1fr)}}
+  .depos blockquote{background:#fff;padding:28px 26px 24px;font-size:18px;line-height:1.5;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  .depos blockquote::before{content:"";display:block;width:44px;height:10px;background:#000;box-shadow:inset -4px 0 0 #000,inset -14px 0 0 var(--ponteira);margin-bottom:20px}
+  .depos footer{margin-top:16px;font-size:15px;color:var(--fio-escuro);font-weight:600}
+  .duvidas{padding:var(--sec) 0}
+  .faq{margin-top:36px;max-width:880px;border-top:2px solid #000}
+  .faq details{border-bottom:1px solid rgba(0,0,0,.18)}
+  .faq summary{list-style:none;cursor:pointer;padding:24px 60px 24px 0;position:relative;font-weight:700;font-size:clamp(18px,1.6vw,21px);line-height:1.35}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::before,.faq summary::after{content:"";position:absolute;right:8px;top:50%;width:22px;height:5px;margin-top:-2.5px;background:#000;transition:transform .45s var(--ease),background-color .3s}
+  .faq summary::after{transform:rotate(90deg)}
+  .faq details[open] summary::before{transform:rotate(45deg)}
+  .faq details[open] summary::after{transform:rotate(135deg)}
+  .faq details.fechando summary::before{transform:none}
+  .faq details.fechando summary::after{transform:rotate(90deg)}
+  .faq summary:hover::before,.faq summary:hover::after{background:var(--ponteira)}
+  .faq__resp{overflow:hidden}
+  .faq__resp p{padding:0 0 26px;max-width:62ch;color:#2E2E2B}
+
+  /* ---------- chamada final ---------- */
+  .chamada{position:relative;padding:clamp(104px,15vw,210px) 0 clamp(56px,7vw,96px);overflow:hidden;overflow:clip;isolation:isolate}
+  .chamada__bg{position:absolute;inset:0;z-index:-1}
+  .chamada__bg img{width:100%;height:100%;object-fit:cover;object-position:72% 50%;filter:brightness(.62) contrast(1.2)}
+  .chamada__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.78) 42%,rgba(0,0,0,.18) 100%)}
+  .chamada h2{font-size:clamp(48px,7.2vw,112px);max-width:none}
+  .chamada p{margin-top:22px;max-width:42ch;font-size:clamp(17px,1.4vw,20px);color:#D2D2CB}
+  .chamada .btn-faixa{margin-top:34px}
+  .endereco{margin-top:clamp(56px,8vw,96px);padding-top:28px;border-top:1px solid rgba(255,255,255,.2);display:grid;gap:22px}
+  @media (min-width:800px){.endereco{grid-template-columns:repeat(3,1fr)}}
+  .endereco b{display:block;font-size:14px;color:var(--fio);font-weight:600;margin-bottom:4px}
+
+  /* ---------- rodapé ---------- */
+  .rodape{background:#000;padding-top:clamp(64px,8vw,104px);color:var(--fio);font-size:15px;overflow:hidden;overflow:clip}
+  .rodape__grade{display:grid;gap:36px}
+  @media (min-width:800px){.rodape__grade{grid-template-columns:1.5fr 1fr 1.1fr 1.2fr}}
+  .rodape__tit{font-size:16px;line-height:1.3;color:var(--algodao);font-weight:700;margin-bottom:12px}
+  .rodape ul{list-style:none;display:grid;gap:6px}
+  .rodape a{text-decoration:none}
+  .rodape a:hover{color:var(--algodao);text-decoration:underline}
+  .rodape .marca{margin-bottom:14px}
+  .rodape__horas li{display:flex;justify-content:space-between;gap:16px;max-width:280px}
+  .rodape__marca{font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:clamp(110px,30vw,500px);line-height:.76;color:#151515;letter-spacing:-.01em;margin-top:clamp(48px,7vw,88px);white-space:nowrap;text-align:center;user-select:none;pointer-events:none}
+  .rodape__base{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;align-items:flex-start;padding:20px calc(var(--gutter) + 72px) 26px var(--gutter);border-top:1px solid var(--borda);font-size:13px}
+  .demo{color:var(--f-amarela)}
+  .creditos{max-width:760px}
+  .creditos summary{cursor:pointer}
+  .creditos p{margin-top:10px}
+  .creditos ul{list-style:none;margin-top:8px;columns:2 260px;column-gap:28px;font-size:12px;line-height:1.55}
+  .creditos li{break-inside:avoid}
+  .creditos a{text-decoration:underline}
+
+  .flutuante{position:fixed;right:16px;bottom:16px;z-index:50;width:60px;height:60px;border-radius:50%;background:var(--wpp);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .5s var(--ease),opacity .3s}
+  .flutuante svg{width:30px;height:30px}
+  .flutuante::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 0 rgba(23,143,71,.65)}
+  .flutuante.pulso::after{animation:pulso 1.5s ease-out 2}
+  @keyframes pulso{to{box-shadow:0 0 0 20px rgba(23,143,71,0)}}
+  @media (prefers-reduced-motion:reduce){.flutuante.pulso::after{animation:none}}
+  .anim .flutuante{transform:scale(0);opacity:0}
+  .anim .flutuante.visivel{transform:scale(1);opacity:1}
+  .anim .flutuante.visivel.oculto{transform:scale(0);opacity:0;pointer-events:none}
+
+  /* estados iniciais da abertura (só quando vai animar) */
+  .anim [data-intro]{visibility:hidden}
+</style>
+</head>
+<body>
+<a class="pular" href="#turmas">Pular para as turmas</a>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="pincel" x="-6%" y="-30%" width="112%" height="160%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="4" result="ruido"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="34" xChannelSelector="R" yChannelSelector="G" result="borda"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.0015 0.22" numOctaves="2" seed="9" result="cerdas"/>
+      <feColorMatrix in="cerdas" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -5 0 0 0 3.4" result="mascara"/>
+      <feComposite in="borda" in2="mascara" operator="in"/>
+    </filter>
+  </defs>
+  <symbol id="ic-wpp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></symbol>
+  <symbol id="ic-marca" viewBox="0 0 40 40">
+    <path d="M3 14h34v7H3z" fill="#0b0b0b" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M16 21h5l-7 16H9zM19 21h5l7 16h-5z" fill="#0b0b0b" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <rect x="15" y="10.5" width="10" height="13" rx="1.5" fill="#0b0b0b" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M23.4 31h5l1.3 3h-5z" fill="#D3212B"/>
+  </symbol>
+  <symbol id="estrela" viewBox="0 0 24 24"><path d="M12 2.6l2.85 6.05 6.65.8-4.9 4.58 1.28 6.57L12 17.33 6.12 20.6l1.28-6.57L2.5 9.45l6.65-.8z"/></symbol>
+</svg>
+
+<div class="progresso" aria-hidden="true"><span class="progresso__ponta"><i></i><i></i><i></i><i></i></span></div>
+
+<header class="topo" id="topo">
+  <div class="wrap topo__in">
+    <a class="marca" href="#inicio" aria-label="Guarda Jiu-Jitsu, voltar ao início">
+      <svg aria-hidden="true"><use href="#ic-marca" color="#ECECE6"/></svg>
+      <span class="marca__nome"><b>Guarda</b><small>Jiu-Jitsu</small></span>
+    </a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#turmas">Turmas</a>
+      <a href="#tempos">Arte suave</a>
+      <a href="#primeira-aula">Primeira aula</a>
+      <a href="#professor">Professor</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn-faixa btn-faixa--sm" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener">
+      <span class="btn-faixa__txt"><svg aria-hidden="true"><use href="#ic-wpp"/></svg><span class="so-longo">Aula experimental grátis</span><span class="so-curto">Aula grátis</span></span>
+      <span class="btn-faixa__ponta" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="gaveta" aria-label="Abrir menu"><span></span></button>
+  </div>
+</header>
+
+<div class="gaveta" id="gaveta" inert>
+  <nav aria-label="Menu">
+    <a href="#turmas">Turmas</a>
+    <a href="#tempos">Arte suave</a>
+    <a href="#primeira-aula">Primeira aula</a>
+    <a href="#professor">Professor</a>
+    <a href="#duvidas">Dúvidas</a>
+  </nav>
+  <p>Rua das Acácias, 120, Centro. Segunda a sexta, 6h às 21h30. Sábado, 9h às 12h.</p>
+</div>
+
+<main>
+  <!-- ABERTURA -->
+  <section class="hero" id="inicio" tabindex="-1">
+    <div class="wrap hero__txt">
+      <div class="hero__wrap">
+        <h1 class="display hero__titulo" data-intro>
+          <span class="linha"><span>Forte</span></span>
+          <span class="linha"><span>sem precisar</span></span>
+          <span class="linha"><span>bater<span class="ponto">.</span></span></span>
+        </h1>
+        <p class="hero__sub" data-intro>Jiu-jitsu para crianças a partir de 4 anos e para adultos que nunca treinaram. Turmas separadas por idade, e a primeira aula é por nossa conta.</p>
+        <div class="hero__acoes" data-intro>
+          <a class="btn-faixa" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener">
+            <span class="btn-faixa__txt"><svg aria-hidden="true"><use href="#ic-wpp"/></svg>Agendar aula grátis</span>
+            <span class="btn-faixa__ponta" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </a>
+          <a class="btn-linha" href="#turmas"><span class="btn-linha__txt" data-txt="Ver turmas e horários"><span>Ver turmas e horários</span></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__foto" data-intro>
+      <span class="hero__kanji" aria-hidden="true" lang="ja">柔術</span>
+      <svg class="pincel" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#pincel)"><path class="t1" d="M60 180 C 260 120 560 110 940 140" pathLength="1"/><path class="t2" d="M150 238 C 390 206 640 214 900 196" pathLength="1"/></g></svg>
+      <img src="img/hero-queda.webp" width="1063" height="1600" alt="Dois alunos de kimono treinando uma queda: o de kimono azul projeta o colega por cima do quadril" fetchpriority="high">
+    </div>
+    <a class="hero-card" href="#turmas" data-turma="pequenos" data-intro>
+      <span class="hero-card__fotos" aria-hidden="true"><img src="img/thumb-pequenos.webp" width="220" height="275" alt=""><img src="img/thumb-kids.webp" width="220" height="275" alt=""></span>
+      <span class="hero-card__txt"><b>Turmas infantis</b>A partir de 4 anos, separadas por idade</span>
+      <span class="mais" aria-hidden="true"></span>
+    </a>
+    <div class="hero__role" aria-hidden="true" data-intro><i></i>Role para ver</div>
+  </section>
+
+  <!-- FAIXAS CRUZADAS -->
+  <div class="cruzadas">
+    <ul class="sr">
+      <li>Aula experimental grátis</li><li>Turmas a partir de 4 anos</li><li>Kimono emprestado na primeira aula</li>
+      <li>Pais podem assistir à aula</li><li>Sem compromisso de matrícula</li><li>12 anos no mesmo endereço</li>
+    </ul>
+    <div class="correia correia--branca" aria-hidden="true">
+      <div class="correia__trilho">
+        <span class="correia__item">Aula experimental grátis<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+        <span class="correia__item">Turmas a partir de 4 anos<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+        <span class="correia__item">Kimono emprestado na primeira aula<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+      </div>
+    </div>
+    <div class="correia correia--preta" aria-hidden="true">
+      <div class="correia__trilho">
+        <span class="correia__item">Pais podem assistir à aula<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+        <span class="correia__item">Sem compromisso de matrícula<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+        <span class="correia__item">12 anos no mesmo endereço<span class="correia__ponta"><i></i><i></i><i></i><i></i></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOTIVOS -->
+  <section class="motivos claro" aria-labelledby="motivos-t">
+    <div class="wrap">
+      <div class="sec-cab">
+        <h2 class="titulo" id="motivos-t">O que os pais contam depois de alguns meses</h2>
+        <p class="intro">A técnica vem com o tempo. Antes dela aparecem outras mudanças, em casa e na escola.</p>
+      </div>
+      <div class="motivos__grade">
+        <article class="motivo"><span class="motivo__faixa" style="--c:var(--f-cinza)"></span><h3>Respeito dentro e fora do tatame</h3><p>Cumprimentar o professor, esperar a vez, cuidar do colega. A rotina da aula ensina isso sem sermão.</p></article>
+        <article class="motivo"><span class="motivo__faixa" style="--c:var(--f-amarela)"></span><h3>Energia gasta com regra</h3><p>A criança corre, rola e se cansa, mas com começo, meio e fim. Muitos pais notam o sono melhorando.</p></article>
+        <article class="motivo"><span class="motivo__faixa" style="--c:var(--f-laranja)"></span><h3>Confiança pra se defender</h3><p>O jiu-jitsu ensina a controlar sem machucar. A criança aprende a sair de uma situação ruim com calma.</p></article>
+        <article class="motivo"><span class="motivo__faixa" style="--c:var(--f-verde)"></span><h3>Uma meta que dá pra ver</h3><p>Cada grau na faixa é uma conquista que a criança enxerga, conta pra todo mundo e mostra em casa.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTE SUAVE EM QUATRO TEMPOS -->
+  <section class="tempos" id="tempos" tabindex="-1" aria-labelledby="tempos-t">
+    <div class="tempos__fixo">
+      <div class="wrap tempos__cab sec-cab">
+        <h2 class="titulo" id="tempos-t">Arte suave, em quatro tempos</h2>
+        <p class="intro">Jiu-jitsu quer dizer arte suave. Toda luta de treino passa por quatro momentos, e cada um ensina alguma coisa que vale fora do tatame.</p>
+      </div>
+      <div class="wrap tempos__palco">
+        <svg class="pincel tempos__pincel" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#pincel)"><path class="t1" d="M60 180 C 260 120 560 110 940 140" pathLength="1"/><path class="t2" d="M150 238 C 390 206 640 214 900 196" pathLength="1"/></g></svg>
+        <ol class="tempos__lista">
+          <li class="tempo">
+            <span class="tempo__n" aria-hidden="true">1</span>
+            <figure class="tempo__foto"><img src="img/tempo-1-pegada.webp" width="994" height="1389" loading="lazy" alt="Professor de faixa preta segura a gola e a manga do kimono do aluno, os dois em pé"></figure>
+            <div class="tempo__txt"><h3>Pegada</h3><p class="tempo__lema">Segurar firme e soltar quando o colega pede.</p><p class="tempo__desc">Tudo começa com a mão no kimono do outro. A criança aprende a usar força com controle, sem puxar com raiva.</p></div>
+          </li>
+          <li class="tempo">
+            <span class="tempo__n" aria-hidden="true">2</span>
+            <figure class="tempo__foto"><img src="img/tempo-2-passagem.webp" width="1085" height="936" loading="lazy" alt="Aluno de kimono azul salta por cima das pernas do colega deitado para passar a guarda"></figure>
+            <div class="tempo__txt"><h3>Passagem</h3><p class="tempo__lema">Pensar antes de agir.</p><p class="tempo__desc">Passar a guarda é resolver um problema: o colega se defende e você procura outro caminho. É xadrez com o corpo.</p></div>
+          </li>
+          <li class="tempo">
+            <span class="tempo__n" aria-hidden="true">3</span>
+            <figure class="tempo__foto"><img src="img/tempo-3-controle.webp" width="1063" height="1108" loading="lazy" alt="Professor de kimono branco imobiliza o aluno no chão, apoiado sobre ele"></figure>
+            <div class="tempo__txt"><h3>Controle</h3><p class="tempo__lema">Dominar sem bater.</p><p class="tempo__desc">Imobilizar alguém sem soco e sem chute. Vence quem tem técnica, não quem é maior, e por isso se chama arte suave.</p></div>
+          </li>
+          <li class="tempo">
+            <span class="tempo__n" aria-hidden="true">4</span>
+            <figure class="tempo__foto"><img src="img/tempo-4-tapinha.webp" width="994" height="1362" loading="lazy" alt="Dois alunos no chão em uma posição de finalização, um deles prestes a dar os tapinhas"></figure>
+            <div class="tempo__txt"><h3>Finalização</h3><p class="tempo__lema">Bateu, parou.</p><p class="tempo__desc">Quando o colega dá três tapinhas, a luta para na hora. Respeitar o limite do outro é a primeira regra do tatame.</p></div>
+          </li>
+        </ol>
+      </div>
+      <div class="wrap tempos__nav">
+        <div class="tempos__trilha" aria-hidden="true"><span class="tempos__fill"></span><span class="tempos__ponta"><i></i><i></i><i></i><i></i></span></div>
+        <ol aria-label="Os quatro tempos">
+          <li><button type="button" aria-current="step"><span class="tempos__num">1. </span>Pegada</button></li>
+          <li><button type="button"><span class="tempos__num">2. </span>Passagem</button></li>
+          <li><button type="button"><span class="tempos__num">3. </span>Controle</button></li>
+          <li><button type="button"><span class="tempos__num">4. </span>Finalização</button></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURMAS -->
+  <section class="turmas claro" id="turmas" tabindex="-1" aria-labelledby="turmas-t">
+    <div class="wrap">
+      <div class="sec-cab">
+        <h2 class="titulo" id="turmas-t">Qual a idade de quem vai treinar?</h2>
+        <p class="intro">Cada turma tem ritmo, regras e faixas próprias. Escolha a turma para ver os dias, os horários e as faixas.</p>
+      </div>
+      <div class="turmas__cards" role="group" aria-label="Escolha a turma">
+        <button class="turma-card" type="button" data-t="pequenos" aria-pressed="false" aria-controls="turma-painel">
+          <span class="turma-card__foto"><img src="img/turma-pequenos.webp" width="600" height="751" loading="lazy" alt=""></span>
+          <span class="turma-card__faixa" aria-hidden="true"><span style="background:var(--f-branca)"></span><span style="background:var(--f-cinza)"></span></span>
+          <span class="turma-card__txt"><span class="turma-card__nome">Pequenos</span><span class="turma-card__idade">4 a 6 anos</span></span>
+          <span class="mais" aria-hidden="true"></span>
+        </button>
+        <button class="turma-card" type="button" data-t="kids" aria-pressed="true" aria-controls="turma-painel">
+          <span class="turma-card__foto"><img src="img/turma-kids.webp" width="546" height="683" loading="lazy" alt=""></span>
+          <span class="turma-card__faixa" aria-hidden="true"><span style="background:var(--f-cinza)"></span><span style="background:var(--f-amarela)"></span><span style="background:var(--f-laranja)"></span></span>
+          <span class="turma-card__txt"><span class="turma-card__nome">Kids</span><span class="turma-card__idade">7 a 10 anos</span></span>
+          <span class="mais" aria-hidden="true"></span>
+        </button>
+        <button class="turma-card" type="button" data-t="juvenil" aria-pressed="false" aria-controls="turma-painel">
+          <span class="turma-card__foto"><img src="img/turma-juvenil.webp" width="598" height="748" loading="lazy" alt=""></span>
+          <span class="turma-card__faixa" aria-hidden="true"><span style="background:var(--f-laranja)"></span><span style="background:var(--f-verde)"></span></span>
+          <span class="turma-card__txt"><span class="turma-card__nome">Juvenil</span><span class="turma-card__idade">11 a 15 anos</span></span>
+          <span class="mais" aria-hidden="true"></span>
+        </button>
+        <button class="turma-card" type="button" data-t="iniciante" aria-pressed="false" aria-controls="turma-painel">
+          <span class="turma-card__foto"><img src="img/turma-iniciante.webp" width="600" height="751" loading="lazy" alt=""></span>
+          <span class="turma-card__faixa" aria-hidden="true"><span style="background:var(--f-branca)"></span><span style="background:var(--f-azul)"></span></span>
+          <span class="turma-card__txt"><span class="turma-card__nome">Adulto iniciante</span><span class="turma-card__idade">16 anos ou mais, nunca treinou</span></span>
+          <span class="mais" aria-hidden="true"></span>
+        </button>
+        <button class="turma-card" type="button" data-t="adulto" aria-pressed="false" aria-controls="turma-painel">
+          <span class="turma-card__foto"><img src="img/turma-adulto.webp" width="600" height="750" loading="lazy" alt=""></span>
+          <span class="turma-card__faixa" aria-hidden="true"><span style="background:var(--f-azul)"></span><span style="background:var(--f-roxa)"></span><span style="background:var(--f-marrom)"></span><span style="background:var(--f-preta)"></span></span>
+          <span class="turma-card__txt"><span class="turma-card__nome">Adulto</span><span class="turma-card__idade">16 anos ou mais, já treina</span></span>
+          <span class="mais" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="turma-painel" id="turma-painel" aria-live="polite">
+        <div class="turma-painel__a">
+          <p class="turma-painel__idade" id="t-idade">7 a 10 anos</p>
+          <h3 id="t-nome">Kids</h3>
+          <p class="turma-painel__desc" id="t-desc">Técnica de verdade com linguagem de criança. Toda aula termina com luta orientada, e o professor acompanha cada um até o próximo grau.</p>
+          <div class="faixas" id="t-faixas"><span class="f cinza" style="background:var(--f-cinza)" title="Faixa cinza"></span><span class="f amarela" style="background:var(--f-amarela)" title="Faixa amarela"></span><span class="f laranja" style="background:var(--f-laranja)" title="Faixa laranja"></span><small>Faixa cinza, amarela e laranja</small></div>
+        </div>
+        <div class="turma-painel__b">
+          <ul class="horarios" id="t-horarios"><li><span>Segunda, quarta e sexta</span><span class="h">17h30</span></li><li><span>Sábado</span><span class="h">10h</span></li></ul>
+          <a class="btn-faixa" id="t-cta" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20turma%20Kids%20(7%20a%2010%20anos)." target="_blank" rel="noopener">
+            <span class="btn-faixa__txt"><svg aria-hidden="true"><use href="#ic-wpp"/></svg><span id="t-cta-txt">Marcar aula grátis na turma Kids</span></span>
+            <span class="btn-faixa__ponta" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </a>
+          <p class="turma-painel__nota">A mensagem já vai pronta com a turma escolhida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIMEIRA AULA -->
+  <section class="primeira" id="primeira-aula" tabindex="-1" aria-labelledby="primeira-t">
+    <div class="wrap">
+      <div class="sec-cab">
+        <h2 class="titulo" id="primeira-t">A primeira aula, do começo ao fim</h2>
+        <p class="intro">Ninguém chega sabendo. O professor recebe quem é novo e explica tudo antes de entrar no tatame.</p>
+      </div>
+      <div class="passos">
+        <div class="passos__trilha" aria-hidden="true"><span class="passos__fill"></span><span class="passos__ponta"><i></i><i></i><i></i><i></i></span></div>
+        <ol>
+          <li class="passo"><span class="passo__n" aria-hidden="true">1</span><h3>Escolha a turma</h3><p>Pela idade, ali em cima. Na dúvida entre duas, a gente indica.</p></li>
+          <li class="passo"><span class="passo__n" aria-hidden="true">2</span><h3>Chame no WhatsApp</h3><p>Confirmamos o dia e o horário e tiramos qualquer dúvida antes.</p></li>
+          <li class="passo"><span class="passo__n" aria-hidden="true">3</span><h3>Venha de roupa confortável</h3><p>Camiseta e bermuda servem. Se quiser, emprestamos um kimono.</p></li>
+          <li class="passo"><span class="passo__n" aria-hidden="true">4</span><h3>Treine e decida depois</h3><p>Os pais podem assistir à aula das crianças. Sem compromisso de matrícula.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSOR -->
+  <section class="professor claro" id="professor" tabindex="-1" aria-labelledby="professor-t">
+    <div class="wrap professor__grade">
+      <div class="professor__fotos">
+        <svg class="pincel" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#pincel)"><path class="t1" d="M60 180 C 260 120 560 110 940 140" pathLength="1"/><path class="t2" d="M150 238 C 390 206 640 214 900 196" pathLength="1"/></g></svg>
+        <div class="professor__foto"><img src="img/professor-grau.webp" width="820" height="1025" loading="lazy" alt="Professor de faixa preta amarra um grau novo na faixa de uma aluna pequena"></div>
+        <img class="professor__detalhe" src="img/faixa-roxa.webp" width="520" height="520" loading="lazy" alt="Faixa roxa com quatro graus sobre um kimono branco">
+      </div>
+      <div>
+        <h2 class="titulo" id="professor-t">Quem dá a aula</h2>
+        <p class="professor__nome">Prof. Marcelo Antunes, faixa preta 3º grau</p>
+        <p class="professor__bio">Começou a treinar aos 9 anos, no mesmo bairro, e dá aula para crianças há 15. Na turma dos pequenos ele se ajoelha pra conversar na altura deles, e é ele quem amarra cada grau novo na faixa.</p>
+        <ul class="lista-faixa">
+          <li>Professores formados em educação física</li>
+          <li>No máximo 16 crianças por turma</li>
+          <li>Um auxiliar no tatame em toda aula infantil</li>
+        </ul>
+        <dl class="numeros">
+          <div><dt>anos no mesmo endereço</dt><dd data-conta="12">12</dd></div>
+          <div><dt>alunos treinando hoje</dt><dd data-conta="280">280</dd></div>
+          <div><dt>no Google, com 140 avaliações</dt><dd data-conta="4.9" data-casas="1">4,9</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="galeria" aria-labelledby="galeria-t">
+    <div class="wrap sec-cab">
+      <h2 class="titulo" id="galeria-t">O tatame por dentro</h2>
+      <p class="intro">Treino de segunda a sábado, das 6h30 às 21h30. Tem gente de 4 a 60 e poucos anos.</p>
+    </div>
+    <div class="galeria__trilho">
+      <figure class="galeria__item"><img src="img/galeria-treino-sprawl-pb.webp" width="1140" height="760" loading="lazy" alt="Dois alunos de kimono treinando uma defesa de queda"><figcaption>Drill de queda na turma adulto</figcaption></figure>
+      <figure class="galeria__item"><img src="img/galeria-grau-azul.webp" width="581" height="760" loading="lazy" alt="Professor prende o grau com fita na faixa azul de um aluno"><figcaption>Grau novo na faixa azul</figcaption></figure>
+      <figure class="galeria__item"><img src="img/galeria-tatame-vermelho.webp" width="1153" height="760" loading="lazy" alt="Dois alunos sem kimono treinando passagem de guarda num tatame vermelho"><figcaption>Treino sem kimono, sexta à noite</figcaption></figure>
+      <figure class="galeria__item"><img src="img/galeria-faixas-chao.webp" width="1024" height="683" loading="lazy" alt="Faixas pretas estendidas no chão, com alunos ajoelhados ao fundo"><figcaption>Antes da aula, cada um ajeita a faixa</figcaption></figure>
+      <figure class="galeria__item"><img src="img/galeria-meia-guarda-pb.webp" width="1064" height="760" loading="lazy" alt="Dois alunos no chão treinando a posição de meia-guarda"><figcaption>Meia-guarda no rola de fim de aula</figcaption></figure>
+      <figure class="galeria__item"><img src="img/galeria-palco-kimura.webp" width="1139" height="760" loading="lazy" alt="Dois atletas lutando no chão de um palco de campeonato, com público ao fundo"><figcaption>Campeonato: compete quem quer</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="depo claro" aria-labelledby="depo-t">
+    <div class="wrap">
+      <h2 class="titulo" id="depo-t">Quem treina aqui recomenda</h2>
+      <div class="nota-google">
+        <span class="nota-google__num" data-conta="4.9" data-casas="1">4,9</span>
+        <div>
+          <div class="estrelas" role="img" aria-label="Nota 4,9 de 5">
+            <svg viewBox="0 0 150 28" aria-hidden="true" fill="rgba(0,0,0,.14)"><use href="#estrela" x="0" width="28" height="28"/><use href="#estrela" x="30.5" width="28" height="28"/><use href="#estrela" x="61" width="28" height="28"/><use href="#estrela" x="91.5" width="28" height="28"/><use href="#estrela" x="122" width="28" height="28"/></svg>
+            <span class="estrelas__cheia"><svg viewBox="0 0 150 28" aria-hidden="true" fill="#000"><use href="#estrela" x="0" width="28" height="28"/><use href="#estrela" x="30.5" width="28" height="28"/><use href="#estrela" x="61" width="28" height="28"/><use href="#estrela" x="91.5" width="28" height="28"/><use href="#estrela" x="122" width="28" height="28"/></svg></span>
+          </div>
+          <p>140 avaliações no Google</p>
+        </div>
+      </div>
+      <div class="depos">
+        <blockquote>“Meu filho era muito tímido e hoje chega na aula cumprimentando todo mundo. O professor tem uma paciência enorme com os pequenos.”<footer>Mãe do Davi, turma Kids</footer></blockquote>
+        <blockquote>“Minha filha de 5 anos conta os dias pra próxima aula. Quando ganhou o primeiro grau, mostrou a faixa pra família inteira.”<footer>Pai da Alice, turma Pequenos</footer></blockquote>
+        <blockquote>“Comecei com 38 anos sem nunca ter treinado nada. A turma de iniciante me deixou à vontade desde o primeiro dia.”<footer>Rafael, adulto iniciante</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- DÚVIDAS -->
+  <section class="duvidas claro" id="duvidas" tabindex="-1" aria-labelledby="duvidas-t">
+    <div class="wrap">
+      <h2 class="titulo" id="duvidas-t">Perguntas que os pais sempre fazem</h2>
+      <div class="faq">
+        <details><summary>Com que idade meu filho pode começar?</summary><div class="faq__resp"><p>A partir de 4 anos, na turma dos pequenos. Nessa idade a aula é quase toda em forma de brincadeira, com rolamento e equilíbrio.</p></div></details>
+        <details><summary>Jiu-jitsu machuca?</summary><div class="faq__resp"><p>Nas turmas infantis não tem golpe no rosto nem chute. O treino é de controle, e o professor para a luta a qualquer sinal. Pequenos arranhões e roxos podem acontecer, como em qualquer esporte.</p></div></details>
+        <details><summary>Meu filho é tímido. Vai se dar bem?</summary><div class="faq__resp"><p>Muitos chegam assim. Na primeira aula ele pode só assistir um pouco, e o professor vai chamando aos poucos, sem forçar.</p></div></details>
+        <details><summary>Precisa comprar kimono para começar?</summary><div class="faq__resp"><p>Não. As primeiras aulas podem ser de camiseta e bermuda, e emprestamos kimono para a experimental. O kimono só é necessário depois da matrícula.</p></div></details>
+        <details><summary>Posso assistir à aula do meu filho?</summary><div class="faq__resp"><p>Pode. Temos um espaço para os pais ao lado do tatame.</p></div></details>
+        <details><summary>Quanto custa a mensalidade?</summary><div class="faq__resp"><p>Os planos mudam conforme a frequência e se há irmãos treinando. Chame no WhatsApp que passamos os valores certinhos.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAMADA FINAL -->
+  <section class="chamada" id="contato" tabindex="-1" aria-labelledby="chamada-t">
+    <div class="chamada__bg" aria-hidden="true"><img src="img/faixa-preta.webp" width="1920" height="1285" loading="lazy" alt=""></div>
+    <div class="wrap">
+      <h2 class="titulo" id="chamada-t"><span class="linha"><span>A primeira aula</span></span><span class="linha"><span>é por nossa conta</span></span></h2>
+      <p>Mande uma mensagem com a idade de quem vai treinar. A gente responde com a turma certa e o próximo horário livre.</p>
+      <a class="btn-faixa" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener">
+        <span class="btn-faixa__txt"><svg aria-hidden="true"><use href="#ic-wpp"/></svg>Agendar aula grátis</span>
+        <span class="btn-faixa__ponta" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </a>
+      <div class="endereco">
+        <div><b>Endereço</b>Rua das Acácias, 120, Centro</div>
+        <div><b>Funcionamento</b>Segunda a sexta, 6h às 21h30<br>Sábado, 9h às 12h</div>
+        <div><b>Estacionamento</b>Vagas na rua e estacionamento conveniado ao lado</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap rodape__grade">
+    <div>
+      <a class="marca" href="#inicio" aria-label="Guarda Jiu-Jitsu, voltar ao início">
+        <svg aria-hidden="true"><use href="#ic-marca" color="#ECECE6"/></svg>
+        <span class="marca__nome"><b>Guarda</b><small>Jiu-Jitsu</small></span>
+      </a>
+      <p>Jiu-jitsu para crianças e adultos no Centro, no mesmo endereço desde 2013.</p>
+    </div>
+    <div>
+      <h2 class="rodape__tit">Na página</h2>
+      <ul><li><a href="#turmas">Turmas e horários</a></li><li><a href="#tempos">Arte suave</a></li><li><a href="#primeira-aula">Primeira aula</a></li><li><a href="#professor">Professor</a></li><li><a href="#duvidas">Dúvidas</a></li></ul>
+    </div>
+    <div>
+      <h2 class="rodape__tit">Recepção</h2>
+      <ul class="rodape__horas"><li><span>Segunda a sexta</span><span>6h às 21h30</span></li><li><span>Sábado</span><span>9h às 12h</span></li><li><span>Domingo</span><span>Fechado</span></li></ul>
+    </div>
+    <div>
+      <h2 class="rodape__tit">Contato</h2>
+      <ul><li>Rua das Acácias, 120, Centro</li><li><a href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener">Falar no WhatsApp</a></li></ul>
+    </div>
+  </div>
+  <div class="rodape__marca" aria-hidden="true">Guarda</div>
+  <div class="rodape__base">
+    <span class="demo">Página de demonstração feita pela DEVitor. Nome, números, horários e avaliações são fictícios.</span>
+    <details class="creditos">
+      <summary>Créditos das fotos</summary>
+      <p>Fotos de bancos de imagens livres, recortadas e algumas convertidas para preto e branco.</p>
+      <ul>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ,_brazilian-jiujitsu_03.jpg" target="_blank" rel="noopener">Queda (abertura)</a>, Yossigur (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ,_brazilian-jiujitsu_02.jpg" target="_blank" rel="noopener">Pegada</a>, Yossigur (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ,_brazilian-jiujitsu_05.jpg" target="_blank" rel="noopener">Passagem</a>, Yossigur (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ,_brazilian-jiujitsu_01.jpg" target="_blank" rel="noopener">Controle</a>, Yossigur (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ,_brazilian-jiujitsu_04.jpg" target="_blank" rel="noopener">Finalização</a>, Yossigur (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Children_and_their_Judo_Master.jpg" target="_blank" rel="noopener">Turma Pequenos</a>, Marjon from The Hague, Netherlands (<a href="https://creativecommons.org/licenses/by/2.0/deed.pt-br" target="_blank" rel="noopener">CC BY 2.0</a>)</li>
+        <li><a href="https://www.rawpixel.com/image/5922418/photo-image-public-domain-kids-white" target="_blank" rel="noopener">Turma Kids</a>, rawpixel (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.pt-br" target="_blank" rel="noopener">CC0 1.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Youth_grappling-armlock.jpg" target="_blank" rel="noopener">Turma Juvenil</a>, Scott LaPierre (<a href="https://creativecommons.org/licenses/by-sa/2.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 2.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Running_the_gauntlet_in_BJJ.jpg" target="_blank" rel="noopener">Turma Adulto iniciante</a>, Lux.lumen (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:120_365_Taking_the_Back_(4565556770).jpg" target="_blank" rel="noopener">Turma Adulto</a>, Mark Bonica from Durham, NH, USA (<a href="https://creativecommons.org/licenses/by/2.0/deed.pt-br" target="_blank" rel="noopener">CC BY 2.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%B9%D0%BF%D0%BE%D0%BC.jpg" target="_blank" rel="noopener">Professor dando grau</a>, Nikitavsrb19 (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D1%8F%D1%81_%D0%B7%D1%96_%D1%81%D1%82%D1%80%D0%B0%D0%B9%D0%BF%D0%BE%D0%BC.jpg" target="_blank" rel="noopener">Faixa roxa com graus</a>, Nikitavsrb19 (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ_no_gi.jpg" target="_blank" rel="noopener">Galeria, treino sem kimono</a>, Oleslava (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Sprawl_(85602581).jpeg" target="_blank" rel="noopener">Galeria, drill de queda</a>, Lorenzo Bryce (<a href="https://creativecommons.org/licenses/by-sa/3.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 3.0</a>)</li>
+        <li><a href="https://www.rawpixel.com/image/5904820/black-belt-students-free-public-domain-cc0-photo" target="_blank" rel="noopener">Galeria, faixas no chão</a>, rawpixel (<a href="https://creativecommons.org/publicdomain/zero/1.0/deed.pt-br" target="_blank" rel="noopener">CC0 1.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:BJJ-half_guard.jpg" target="_blank" rel="noopener">Galeria, meia-guarda</a>, parhessiastes (<a href="https://creativecommons.org/licenses/by-sa/2.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 2.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Kimura_Trap_Brazilian_Jiu-Jitsu.jpg" target="_blank" rel="noopener">Galeria, campeonato</a>, Richard Presley (<a href="https://creativecommons.org/licenses/by/2.0/deed.pt-br" target="_blank" rel="noopener">CC BY 2.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F_%D1%83%D1%87%D0%BD%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%B9%D0%BF%D0%BE%D0%BC.jpg" target="_blank" rel="noopener">Galeria, grau na faixa azul</a>, Nikitavsrb19 (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+        <li><a href="https://commons.wikimedia.org/wiki/File:Black_belt_tied.jpg" target="_blank" rel="noopener">Faixa preta (chamada final)</a>, NainDeathlegs (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-SA 4.0</a>)</li>
+      </ul>
+    </details>
+  </div>
+</footer>
+
+<a class="flutuante" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener" aria-label="Agendar aula experimental pelo WhatsApp"><svg aria-hidden="true"><use href="#ic-wpp"/></svg></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var root = document.documentElement;
+  var reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var temGsap = !!(window.gsap && window.ScrollTrigger);
+  var anima = temGsap && !reduz;
+  var lenis = null;
+  var WA = function (msg) { return 'https://wa.me/?text=' + encodeURIComponent(msg); };
+  var topo = $('#topo');
+
+  /* ---------- turmas ---------- */
+  var TURMAS = {
+    pequenos: { nome: 'Pequenos', idade: '4 a 6 anos',
+      desc: 'Aula curta e cheia de brincadeira: rolamento, equilíbrio e os primeiros movimentos do jiu-jitsu. A criança aprende a ouvir o professor e a respeitar o colega.',
+      faixas: ['branca', 'cinza'], faixasTxt: 'Faixa branca e cinza',
+      horarios: [['Terça e quinta', '17h30'], ['Sábado', '9h']] },
+    kids: { nome: 'Kids', idade: '7 a 10 anos',
+      desc: 'Técnica de verdade com linguagem de criança. Toda aula termina com luta orientada, e o professor acompanha cada um até o próximo grau.',
+      faixas: ['cinza', 'amarela', 'laranja'], faixasTxt: 'Faixa cinza, amarela e laranja',
+      horarios: [['Segunda, quarta e sexta', '17h30'], ['Sábado', '10h']] },
+    juvenil: { nome: 'Juvenil', idade: '11 a 15 anos',
+      desc: 'Para a idade em que eles querem desafio. Mais técnica, preparo físico e, para quem quiser, campeonatos da região.',
+      faixas: ['laranja', 'verde'], faixasTxt: 'Faixa laranja e verde',
+      horarios: [['Segunda, quarta e sexta', '18h30']] },
+    iniciante: { nome: 'Adulto iniciante', idade: '16 anos ou mais, sem experiência',
+      desc: 'Para quem nunca treinou. Começa pelo básico, no seu ritmo, com gente que também está aprendendo. Ninguém é jogado pra lutar com faixa preta no primeiro dia.',
+      faixas: ['branca', 'azul'], faixasTxt: 'Faixa branca até a azul',
+      horarios: [['Terça e quinta', '19h30'], ['Sábado', '11h']] },
+    adulto: { nome: 'Adulto', idade: '16 anos ou mais, já treina',
+      desc: 'Treino completo para todas as faixas: técnica, drills e rola no fim. Quem vem de outra academia também pode fazer a experimental.',
+      faixas: ['azul', 'roxa', 'marrom', 'preta'], faixasTxt: 'Todas as faixas',
+      horarios: [['Segunda, quarta e sexta', '19h30'], ['Terça e quinta', '6h30']] }
+  };
+  var painel = $('#turma-painel');
+  var cards = $$('.turma-card');
+  var partesPainel = $$('.turma-painel__a > *, .turma-painel__b > *');
+  var turmaAtual = 'kids';
+
+  function preencheTurma(chave) {
+    var t = TURMAS[chave];
+    $('#t-nome').textContent = t.nome;
+    $('#t-idade').textContent = t.idade;
+    $('#t-desc').textContent = t.desc;
+    $('#t-faixas').innerHTML = t.faixas.map(function (f) {
+      return '<span class="f ' + f + '" style="background:var(--f-' + f + ')" title="Faixa ' + f + '"></span>';
+    }).join('') + '<small>' + t.faixasTxt + '</small>';
+    $('#t-horarios').innerHTML = t.horarios.map(function (h) {
+      return '<li><span>' + h[0] + '</span><span class="h">' + h[1] + '</span></li>';
+    }).join('');
+    $('#t-cta-txt').textContent = 'Marcar aula grátis na turma ' + t.nome;
+    $('#t-cta').href = WA('Oi! Quero agendar uma aula experimental na turma ' + t.nome + ' (' + t.idade + ').');
+  }
+
+  function mostraTurma(chave, animar) {
+    cards.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.t === chave)); });
+    if (chave === turmaAtual) return;
+    turmaAtual = chave;
+    if (!animar || !anima) { preencheTurma(chave); if (temGsap) ScrollTrigger.refresh(); return; }
+    gsap.killTweensOf(partesPainel);
+    gsap.to(partesPainel, { autoAlpha: 0, y: -12, duration: .18, stagger: .02, ease: 'power2.in', onComplete: function () {
+      preencheTurma(chave);
+      ScrollTrigger.refresh();
+      gsap.fromTo(partesPainel, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: .5, stagger: .05, ease: 'power3.out' });
+      gsap.from('#t-faixas .f', { scaleX: 0, transformOrigin: '0 50%', duration: .5, stagger: .07, delay: .15, ease: 'power3.out' });
+      gsap.from('#t-horarios li', { x: -16, opacity: 0, duration: .4, stagger: .07, delay: .2, ease: 'power2.out' });
+    } });
+  }
+
+  cards.forEach(function (c) {
+    c.addEventListener('click', function () {
+      mostraTurma(c.dataset.t, true);
+      // no celular, traz o painel pra perto se ele ficou abaixo da dobra
+      var r = painel.getBoundingClientRect();
+      if (r.top > innerHeight * .78) {
+        var y = scrollY + r.top - innerHeight * .3;
+        if (lenis) lenis.scrollTo(y, { duration: .9 }); else scrollTo({ top: y, behavior: reduz ? 'auto' : 'smooth' });
+      }
+    });
+  });
+
+  /* ---------- dúvidas ---------- */
+  $$('.faq details').forEach(function (d) {
+    var resp = $('.faq__resp', d);
+    $('summary', d).addEventListener('click', function (e) {
+      if (!anima) return;
+      e.preventDefault();
+      gsap.killTweensOf(resp);
+      if (d.open && !d.classList.contains('fechando')) {
+        d.classList.add('fechando');
+        gsap.to(resp, { height: 0, opacity: 0, duration: .35, ease: 'power2.inOut', onComplete: function () {
+          d.open = false; d.classList.remove('fechando'); gsap.set(resp, { clearProps: 'height,opacity' }); ScrollTrigger.refresh();
+        } });
+      } else {
+        d.classList.remove('fechando');
+        d.open = true;
+        gsap.fromTo(resp, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: .5, ease: 'power3.out', onComplete: function () { ScrollTrigger.refresh(); } });
+      }
+    });
+  });
+
+  /* ---------- menu do celular ---------- */
+  var menuBtn = $('.menu-btn'), gaveta = $('#gaveta'), menuAberto = false;
+  function abreMenu(abrir) {
+    menuAberto = abrir;
+    menuBtn.setAttribute('aria-expanded', String(abrir));
+    menuBtn.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+    gaveta.classList.toggle('aberta', abrir);
+    gaveta.inert = !abrir;
+    if (lenis) { if (abrir) lenis.stop(); else lenis.start(); } else document.body.style.overflow = abrir ? 'hidden' : '';
+    if (abrir) {
+      topo.classList.remove('escondido');
+      if (anima) gsap.fromTo('#gaveta nav a', { yPercent: 70, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: .05, duration: .7, ease: 'expo.out' });
+    }
+  }
+  menuBtn.addEventListener('click', function () { abreMenu(!menuAberto); });
+  $$('#gaveta a').forEach(function (a) { a.addEventListener('click', function () { abreMenu(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menuAberto) { abreMenu(false); menuBtn.focus(); } });
+
+  /* ---------- faixa de progresso, topo e botão flutuante ---------- */
+  var barra = $('.progresso'), grausBarra = $$('.progresso__ponta i'), flutuante = $('.flutuante');
+  var CORES = ['branca', 'azul', 'roxa', 'marrom', 'preta'], ultimo = -1, pulsou = false;
+  function atualizaFaixa(p) {
+    var passo = Math.min(CORES.length * 5 - 1, Math.floor(p * CORES.length * 5));
+    if (passo === ultimo) return;
+    ultimo = passo;
+    var faixa = CORES[Math.floor(passo / 5)], g = passo % 5;
+    barra.style.backgroundColor = 'var(--f-' + faixa + ')';
+    barra.classList.toggle('preta', faixa === 'preta');
+    grausBarra.forEach(function (el, i) { el.classList.toggle('on', i < g); });
+  }
+  function atualizaTopo(y, dir) {
+    topo.classList.toggle('solido', y > 40);
+    topo.classList.toggle('escondido', !menuAberto && dir > 0 && y > innerHeight * .9);
+    var mostra = y > innerHeight * .7;
+    flutuante.classList.toggle('visivel', mostra);
+    if (mostra && !pulsou) { pulsou = true; flutuante.classList.add('pulso'); }
+  }
+
+  if (!temGsap) {
+    root.classList.remove('anim');
+    var yAnt = scrollY;
+    var semGsap = function () {
+      var max = document.documentElement.scrollHeight - innerHeight;
+      atualizaFaixa(max > 0 ? Math.min(1, scrollY / max) : 0);
+      atualizaTopo(scrollY, scrollY > yAnt ? 1 : -1);
+      yAnt = scrollY;
+    };
+    addEventListener('scroll', function () { requestAnimationFrame(semGsap); }, { passive: true });
+    semGsap();
+    $$('[data-turma]').forEach(function (a) { a.addEventListener('click', function () { mostraTurma(a.dataset.turma, false); }); });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  window.__animPronta = true;
+
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function (self) {
+    atualizaFaixa(self.progress);
+    atualizaTopo(self.scroll(), self.direction);
+  } });
+  atualizaFaixa(0);
+  atualizaTopo(scrollY, 1);
+  // o refresh mede a página com a rolagem no topo; depois dele o topo precisa ser recalculado
+  ScrollTrigger.addEventListener('refresh', function () { atualizaTopo(scrollY, 0); });
+
+  /* rolagem suave e âncoras */
+  if (anima && window.Lenis) {
+    lenis = new Lenis({ lerp: .11 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href');
+    var alvo = id.length > 1 && document.querySelector(id);
+    if (!alvo) return;
+    if (a.dataset.turma) mostraTurma(a.dataset.turma, false);
+    if (!lenis) return;
+    e.preventDefault();
+    lenis.scrollTo(alvo, { duration: 1.4, offset: alvo.id === 'inicio' ? 0 : 2, onComplete: function () { alvo.focus({ preventScroll: true }); } });
+    if (history.replaceState) history.replaceState(null, '', id);
+  });
+
+  if (!anima) return;
+  var mm = gsap.matchMedia();
+  // Os ScrollTriggers são criados de cima para baixo, na ordem da página, por causa das duas seções fixas.
+
+  // título entra como uma faixa sendo puxada
+  function puxaTitulo(sel) {
+    gsap.fromTo(sel, { clipPath: 'inset(-25% 100% -25% -6%)' }, { clipPath: 'inset(-25% -6% -25% -6%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath',
+      scrollTrigger: { trigger: sel, start: 'top 85%' } });
+  }
+  function contaAte(el) {
+    var fim = parseFloat(el.dataset.conta), casas = +(el.dataset.casas || 0), o = { v: 0 };
+    var escreve = function () { el.textContent = o.v.toFixed(casas).replace('.', ','); };
+    escreve();
+    gsap.to(o, { v: fim, duration: 1.6, ease: 'power2.out', onUpdate: escreve, scrollTrigger: { trigger: el, start: 'top 88%' } });
+  }
+
+  /* ---------- abertura: a cena de entrada ---------- */
+  var heroImg = $('.hero__foto img'), heroPincel = $$('.hero__foto .pincel path');
+  var linhas = $$('.hero__titulo .linha > span');
+  gsap.set('[data-intro]', { visibility: 'visible' });
+  gsap.set(linhas, { yPercent: 118, rotate: 4 });
+  gsap.set(heroPincel, { strokeDashoffset: 1 });
+  gsap.set('.hero__foto', { clipPath: 'inset(100% 0% 0% 0%)' });
+  gsap.set(heroImg, { scale: 1.12 });
+  gsap.set(['.hero__sub', '.hero__acoes', '.hero__role'], { autoAlpha: 0, y: 22 });
+  gsap.set('.hero-card', { autoAlpha: 0, x: 40 });
+  gsap.set('.hero__kanji', { autoAlpha: 0, yPercent: 8 });
+  gsap.timeline({ defaults: { ease: 'expo.out' } })
+    .to(linhas, { yPercent: 0, rotate: 0, duration: 1.15, stagger: .1 }, .15)
+    .to('.hero__foto', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut', clearProps: 'clipPath' }, .2)
+    .to(heroImg, { scale: 1, duration: 1.8 }, .35)
+    .to(heroPincel, { strokeDashoffset: 0, duration: .9, stagger: .12, ease: 'power3.inOut' }, .75)
+    .to(['.hero__sub', '.hero__acoes'], { autoAlpha: 1, y: 0, duration: .9, stagger: .1 }, .7)
+    .to('.hero__kanji', { autoAlpha: 1, yPercent: 0, duration: 1.4 }, .9)
+    .to('.hero-card', { autoAlpha: 1, x: 0, duration: 1 }, 1.1)
+    .to('.hero__role', { autoAlpha: 1, y: 0, duration: .8 }, 1.2);
+
+  // ao rolar, foto e texto se separam em velocidades diferentes
+  gsap.to(heroImg, { yPercent: 9, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero__kanji', { yPercent: -35, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero__wrap', { yPercent: -16, opacity: .25, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+  /* ---------- faixas cruzadas: andam sozinhas e reagem à velocidade e ao sentido da rolagem ---------- */
+  var esteiras = [];
+  $$('.correia').forEach(function (c, i) {
+    var trilho = $('.correia__trilho', c);
+    var base = $$('.correia__item', trilho);
+    var guarda = 0;
+    while (trilho.scrollWidth < innerWidth * 1.4 && guarda++ < 8) base.forEach(function (n) { trilho.appendChild(n.cloneNode(true)); });
+    $$('.correia__item', trilho).forEach(function (n) { trilho.appendChild(n.cloneNode(true)); });
+    var tw = gsap.fromTo(trilho, { xPercent: i ? -50 : 0 }, { xPercent: i ? 0 : -50, ease: 'none', duration: 38, repeat: -1 });
+    tw.totalTime(tw.duration() * 200); // folga para tocar de trás pra frente quando a rolagem sobe
+    esteiras.push(tw);
+  });
+  gsap.fromTo('.correia--branca', { rotate: -5 }, { rotate: -2, ease: 'none', scrollTrigger: { trigger: '.cruzadas', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo('.correia--preta', { rotate: 4.4 }, { rotate: 1.6, ease: 'none', scrollTrigger: { trigger: '.cruzadas', start: 'top bottom', end: 'bottom top', scrub: true } });
+  var voltaEsteira;
+  ScrollTrigger.create({
+    trigger: '.cruzadas', start: 'top bottom', end: 'bottom top',
+    onToggle: function (self) { esteiras.forEach(function (t) { if (self.isActive) t.resume(); else t.pause(); }); },
+    onUpdate: function (self) {
+      var dir = self.direction, ritmo = dir * (1 + Math.min(Math.abs(self.getVelocity()) / 350, 6));
+      esteiras.forEach(function (t) { gsap.to(t, { timeScale: ritmo, duration: .25, overwrite: true }); });
+      clearTimeout(voltaEsteira);
+      voltaEsteira = setTimeout(function () { esteiras.forEach(function (t) { gsap.to(t, { timeScale: dir, duration: 1, overwrite: true }); }); }, 140);
+    }
+  });
+
+  /* ---------- motivos: as faixas se amarram em sequência ---------- */
+  puxaTitulo('#motivos-t');
+  gsap.from('.motivo__faixa', { scaleX: 0, duration: .9, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '.motivos__grade', start: 'top 80%' } });
+
+  /* ---------- quatro tempos: seção fixa com a luta avançando pela rolagem ---------- */
+  mm.add('(min-height: 540px)', function () {
+    var sec = $('.tempos');
+    sec.classList.add('is-pin');
+    var itens = $$('.tempo', sec);
+    // anima a img (não o li/figure) para o mix-blend continuar enxergando a pincelada atrás
+    var fotos = itens.map(function (li) { return $('.tempo__foto img', li); });
+    var textos = itens.map(function (li) { return [$('.tempo__txt', li), $('.tempo__n', li)]; });
+    var grausT = $$('.tempos__ponta i', sec), botoes = $$('.tempos__nav button', sec);
+    var pincelT = $('.tempos__pincel', sec);
+    var atual = 0;
+    gsap.set(fotos.slice(1), { autoAlpha: 0 });
+    gsap.set([].concat.apply([], textos.slice(1)), { autoAlpha: 0 });
+    gsap.set(grausT, { scaleY: 0 });
+    gsap.set(grausT[0], { scaleY: 1 });
+    // a pincelada é desenhada quando a seção chega, antes de fixar
+    gsap.fromTo($$('path', pincelT), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1, stagger: .12, ease: 'power3.inOut',
+      scrollTrigger: { trigger: sec, start: 'top 55%', toggleActions: 'play none none reverse' } });
+
+    var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: {
+      trigger: sec, start: 'top top', end: function () { return '+=' + Math.round(innerHeight * 3.2); },
+      pin: true, scrub: .7, invalidateOnRefresh: true,
+      onToggle: function (self) { flutuante.classList.toggle('oculto', self.isActive); },
+      onUpdate: function (self) {
+        var t = self.progress * tl.duration();
+        var i = t < .85 ? 0 : t < 1.85 ? 1 : t < 2.85 ? 2 : 3;
+        if (i === atual) return;
+        atual = i;
+        botoes.forEach(function (b, j) { if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+      }
+    } });
+    tl.to($('.tempos__fill', sec), { scaleX: 1, duration: 4 }, 0);
+    var giro = [-14, -6, -19, -10], larg = [1, .9, 1.06, .96];
+    for (var i = 1; i < 4; i++) {
+      tl.to(fotos[i - 1], { autoAlpha: 0, scale: .9, xPercent: -7, duration: .45, ease: 'power2.in' }, i - .3)
+        .fromTo(fotos[i], { autoAlpha: 0, scale: 1.12, xPercent: 7 }, { autoAlpha: 1, scale: 1, xPercent: 0, duration: .55, ease: 'power3.out', immediateRender: false }, i)
+        .to(textos[i - 1], { autoAlpha: 0, y: -36, duration: .3, ease: 'power2.in' }, i - .3)
+        .fromTo(textos[i], { autoAlpha: 0, y: 44 }, { autoAlpha: 1, y: 0, duration: .45, ease: 'power3.out', immediateRender: false }, i + .05)
+        .to(pincelT, { rotate: giro[i], scaleX: larg[i], duration: .9, ease: 'power1.inOut' }, i - .45)
+        .fromTo(grausT[i], { scaleY: 0 }, { scaleY: 1, duration: .25, ease: 'back.out(3)', immediateRender: false }, i + .1);
+    }
+    tl.to({}, { duration: .55 }, 3.45);
+
+    var cliques = botoes.map(function (b, j) {
+      var fn = function () {
+        var st = tl.scrollTrigger, alvo = j === 0 ? 0 : j + .3;
+        var y = st.start + (st.end - st.start) * (alvo / tl.duration());
+        if (lenis) lenis.scrollTo(y, { duration: 1.1 }); else scrollTo({ top: y, behavior: 'smooth' });
+      };
+      b.addEventListener('click', fn);
+      return fn;
+    });
+    return function () {
+      sec.classList.remove('is-pin');
+      flutuante.classList.remove('oculto');
+      botoes.forEach(function (b, j) { b.removeEventListener('click', cliques[j]); });
+    };
+  });
+
+  /* ---------- turmas: cards entram em sequência ---------- */
+  puxaTitulo('#turmas-t');
+  gsap.from('.turma-card', { y: 50, autoAlpha: 0, duration: .9, stagger: .08, ease: 'power3.out', clearProps: 'transform,opacity,visibility',
+    onStart: function () { cards.forEach(function (c) { c.style.transition = 'none'; }); },
+    onComplete: function () { cards.forEach(function (c) { c.style.transition = ''; }); },
+    scrollTrigger: { trigger: '.turmas__cards', start: 'top 85%' } });
+  gsap.from('.turma-card__faixa', { scaleX: 0, duration: .8, stagger: .08, delay: .35, ease: 'power3.out', scrollTrigger: { trigger: '.turmas__cards', start: 'top 85%' } });
+
+  /* ---------- primeira aula: a faixa vai se completando e cada passo ganha um grau ---------- */
+  puxaTitulo('#primeira-t');
+  var passos = $$('.passo'), grausP = $$('.passos__ponta i'), estadoP = [];
+  var limites = [.02, .3, .6, .93];
+  function marcaPassos(p) {
+    passos.forEach(function (el, i) {
+      var ativo = p >= limites[i];
+      if (estadoP[i] === ativo) return;
+      estadoP[i] = ativo;
+      el.classList.toggle('ativo', ativo);
+      gsap.to(grausP[i], { scale: ativo ? 1 : 0, duration: .3, ease: ativo ? 'back.out(3)' : 'power2.in', overwrite: true });
+    });
+  }
+  mm.add({ larga: '(min-width: 900px)', estreita: '(max-width: 899px)' }, function (ctx) {
+    var larga = ctx.conditions.larga, eixo = larga ? 'scaleX' : 'scaleY';
+    var de = {}, para = { ease: 'none', scrollTrigger: { trigger: '.passos', start: larga ? 'top 82%' : 'top 75%', end: larga ? 'bottom 38%' : 'bottom 55%', scrub: .5,
+      onUpdate: function (self) { marcaPassos(self.progress); } } };
+    de[eixo] = 0; para[eixo] = 1;
+    gsap.fromTo('.passos__fill', de, para);
+    estadoP = [];
+    marcaPassos(0);
+  });
+
+  /* ---------- professor ---------- */
+  gsap.fromTo('.professor__fotos .pincel path', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.1, stagger: .15, ease: 'power3.inOut', scrollTrigger: { trigger: '.professor__fotos', start: 'top 75%' } });
+  gsap.fromTo('.professor__foto', { yPercent: 5 }, { yPercent: -5, ease: 'none', scrollTrigger: { trigger: '.professor', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo('.professor__detalhe', { rotate: 14, yPercent: 30 }, { rotate: 4, yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.professor', start: 'top bottom', end: 'center center', scrub: true } });
+  puxaTitulo('#professor-t');
+  gsap.from('.lista-faixa li', { x: -20, autoAlpha: 0, duration: .6, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.lista-faixa', start: 'top 85%' } });
+  $$('.professor [data-conta]').forEach(contaAte);
+
+  /* ---------- galeria: fixa e anda de lado na mesma velocidade da rolagem ---------- */
+  puxaTitulo('#galeria-t');
+  mm.add('(min-width: 900px) and (min-height: 600px)', function () {
+    var sec = $('.galeria'), trilho = $('.galeria__trilho');
+    sec.classList.add('is-pin');
+    trilho.classList.add('scrub');
+    var distancia = function () { return Math.max(0, trilho.scrollWidth - innerWidth); };
+    gsap.to(trilho, { x: function () { return -distancia(); }, ease: 'none',
+      scrollTrigger: { trigger: sec, start: 'top top', end: function () { return '+=' + distancia(); }, pin: true, scrub: .6, invalidateOnRefresh: true,
+        onToggle: function (self) { flutuante.classList.toggle('oculto', self.isActive); } } });
+    return function () { sec.classList.remove('is-pin'); trilho.classList.remove('scrub'); flutuante.classList.remove('oculto'); };
+  });
+
+  /* ---------- depoimentos ---------- */
+  puxaTitulo('#depo-t');
+  contaAte($('.nota-google__num'));
+  gsap.from('.estrelas__cheia', { width: 0, duration: 1.4, ease: 'power2.out', scrollTrigger: { trigger: '.nota-google', start: 'top 85%' } });
+  gsap.from('.depos blockquote', { y: 40, autoAlpha: 0, duration: .9, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.depos', start: 'top 85%' } });
+
+  /* ---------- dúvidas ---------- */
+  puxaTitulo('#duvidas-t');
+
+  /* ---------- chamada final e rodapé ---------- */
+  gsap.fromTo('.chamada__bg img', { scale: 1.2 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.chamada', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.chamada h2 .linha > span', { yPercent: 115, rotate: 3, duration: 1.1, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.chamada', start: 'top 60%' } });
+  gsap.fromTo('.rodape__marca', { yPercent: 50 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.rodape', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+
+  /* ---------- menu marca a seção atual ---------- */
+  $$('.menu a').forEach(function (a) {
+    var alvo = document.querySelector(a.getAttribute('href'));
+    if (!alvo) return;
+    ScrollTrigger.create({ trigger: alvo, start: 'top 45%', end: 'bottom 45%', onToggle: function (self) {
+      if (self.isActive) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    } });
+  });
+
+  // se a troca de tamanho de tela recriar as seções fixas, a ordem de cálculo volta a seguir a página
+  var reordena = function () { ScrollTrigger.sort(); ScrollTrigger.refresh(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(reordena);
+  addEventListener('load', reordena);
+  ScrollTrigger.addEventListener('refreshInit', function () { ScrollTrigger.sort(); });
+})();
+</script>
+</body>
+</html>

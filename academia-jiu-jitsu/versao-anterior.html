@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guarda Jiu-Jitsu · Turmas infantis e adulto</title>
+<meta name="description" content="Jiu-jitsu para crianças a partir de 4 anos e adultos iniciantes. Encontre a turma certa pela idade e agende a aula experimental pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{  
+    --tatame:#1d4fa3;      /* EVA azul do tatame */
+    --tatame-esc:#143a7a;
+    --kimono:#f6f7f4;      /* algodão do kimono */
+    --trama:#e7e9e3;
+    --tinta:#16181d;
+    --cinza:#5b616b;
+    --wpp:#1fa855;
+    /* faixas */
+    --f-branca:#fbfbf8; --f-cinza:#9ea4ab; --f-amarela:#f0bf2e; --f-laranja:#e5722a;
+    --f-verde:#2f8a57; --f-azul:#1d4fa3; --f-roxa:#6a3d9e; --f-marrom:#6b4429; --f-preta:#141414;
+    --gutter:clamp(16px,5vw,48px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--kimono);color:var(--tinta);font:400 17px/1.6 "Atkinson Hyperlegible",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--f-amarela);outline-offset:3px;border-radius:4px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+  .d{font-family:"Archivo",sans-serif;font-stretch:72%;font-weight:850;line-height:.95;letter-spacing:-.01em}
+
+  /* ---------- faixa de progresso (o elemento memorável) ---------- */
+  .progresso{position:fixed;top:0;left:0;right:0;height:10px;z-index:50;background:var(--f-branca);
+    box-shadow:0 1px 0 rgba(0,0,0,.12);transition:background-color .35s}
+  .progresso .tarja{position:absolute;right:28px;top:0;bottom:0;width:58px;background:var(--f-preta);display:flex;gap:4px;align-items:stretch;justify-content:flex-end;padding:0 6px}
+  .progresso.preta .tarja{background:#c4262e}
+  .progresso .grau{width:4px;background:#fff;transform:scaleY(0);transform-origin:top;transition:transform .25s}
+  .progresso .grau.on{transform:scaleY(1)}
+
+  /* ---------- topo ---------- */
+  header{position:sticky;top:10px;z-index:40;background:rgba(246,247,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--trama)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .marca svg{width:30px;height:30px}
+  .marca span{font-family:"Archivo";font-stretch:80%;font-weight:800;font-size:20px;letter-spacing:-.01em;white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;font:700 16px/1 "Atkinson Hyperlegible";text-decoration:none;cursor:pointer;padding:15px 22px;transition:transform .15s,background-color .15s}
+  .btn:active{transform:scale(.98)}
+  .btn svg{width:20px;height:20px;flex:none}
+  .btn-wpp{background:var(--wpp);color:#fff}
+  .btn-wpp:hover{background:#178f47}
+  .btn-sm{padding:11px 16px;font-size:14px}
+  .btn-linha{background:transparent;color:var(--kimono);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
+  .btn-linha:hover{box-shadow:inset 0 0 0 2px #fff}
+  .btn-sm{white-space:nowrap}
+  .so-curto{display:none}
+  @media (max-width:520px){header .btn-sm .so-longo{display:none} header .btn-sm .so-curto{display:inline}}
+
+  /* ---------- abertura ---------- */
+  .abertura{background:var(--tatame);color:var(--kimono);position:relative;overflow:hidden;
+    /* encaixe das placas de EVA */
+    background-image:
+      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:120px 120px}
+  .abertura .wrap{padding-top:56px;padding-bottom:0}
+  .abertura h1{font-size:clamp(46px,11vw,96px);max-width:13ch}
+  .abertura .grade{display:grid;gap:40px}
+  .escada{display:none}
+  @media (min-width:960px){
+    .abertura .grade{grid-template-columns:1.25fr .75fr;align-items:end}
+    .escada{display:block;list-style:none;margin-bottom:44px}
+    .escada li{display:flex;align-items:center;gap:14px;font-size:14px;color:#dfe7f6;margin-top:7px}
+    .escada .f{height:22px;flex:1;max-width:var(--w);position:relative;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+    .escada .f::after{content:"";position:absolute;right:10px;top:0;bottom:0;width:22px;background:var(--f-preta)}
+    .escada .f.preta::after{background:#c4262e}
+    .escada span{width:118px;flex:none}
+  }
+  .abertura p.sub{font-size:clamp(17px,2.2vw,20px);max-width:34ch;margin-top:22px;color:#dfe7f6}
+  .abertura .acoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .fatos{display:flex;flex-wrap:wrap;gap:8px 28px;margin:40px 0 44px;font-size:15px;color:#dfe7f6}
+  .fatos b{display:block;font-family:"Archivo";font-stretch:75%;font-weight:800;font-size:30px;line-height:1;color:#fff}
+
+  /* a faixa amarrada atravessando a abertura */
+  .abertura{padding-bottom:48px}
+  .faixa-grande{position:relative;height:58px;margin:0 calc(var(--gutter) * -1);box-shadow:0 10px 0 rgba(0,0,0,.18);
+    background:var(--f-branca);
+    background-image:linear-gradient(transparent 11px,rgba(0,0,0,.09) 11px 12px,transparent 12px 46px,rgba(0,0,0,.09) 46px 47px,transparent 47px);
+    clip-path:inset(0 0 0 0);animation:amarra 1.1s cubic-bezier(.7,0,.2,1) .15s both}
+  .faixa-grande .tarja{position:absolute;right:12%;top:0;bottom:0;width:clamp(96px,14vw,150px);background:var(--f-preta);display:flex;justify-content:flex-end;gap:9px;padding:0 16px}
+  .faixa-grande .tarja i{width:clamp(6px,0.8vw,10px);background:#fff;animation:grau .3s ease-out both}
+  .faixa-grande .tarja i:nth-child(1){animation-delay:1.25s}
+  .faixa-grande .tarja i:nth-child(2){animation-delay:1.4s}
+  .faixa-grande .tarja i:nth-child(3){animation-delay:1.55s}
+  .faixa-grande .tarja i:nth-child(4){animation-delay:1.7s}
+  @keyframes amarra{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+  @keyframes grau{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @media (prefers-reduced-motion:reduce){.faixa-grande,.faixa-grande .tarja i{animation:none}}
+
+  section{padding:88px 0}
+  h2{font-size:clamp(38px,7vw,64px);max-width:16ch}
+  .intro{max-width:56ch;color:var(--cinza);margin-top:16px;font-size:18px}
+
+  /* ---------- turmas: seletor por idade ---------- */
+  .idades{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .idades button{appearance:none;border:2px solid var(--tinta);background:transparent;color:var(--tinta);border-radius:999px;
+    font:700 16px/1 "Atkinson Hyperlegible";padding:13px 18px;cursor:pointer;transition:background-color .15s,color .15s}
+  .idades button[aria-pressed="true"]{background:var(--tinta);color:var(--kimono)}
+  .idades button:hover:not([aria-pressed="true"]){background:var(--trama)}
+  .turma{margin-top:22px;background:#fff;border:2px solid var(--tinta);border-radius:20px;overflow:hidden;display:grid}
+  @media (min-width:860px){.turma{grid-template-columns:1.15fr 1fr}}
+  .turma .lado{padding:clamp(22px,4vw,40px)}
+  .turma .lado + .lado{border-top:2px solid var(--tinta)}
+  @media (min-width:860px){.turma .lado + .lado{border-top:0;border-left:2px solid var(--tinta)}}
+  .turma h3{font-family:"Archivo";font-stretch:75%;font-weight:850;font-size:clamp(34px,5vw,48px);line-height:1}
+  .turma .faixa-idade{font-size:17px;color:var(--cinza);margin-top:6px}
+  .turma p.desc{margin-top:18px;max-width:46ch}
+  .faixas{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap;align-items:center}
+  .faixas .f{width:46px;height:14px;border-radius:2px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+  .faixas .f::after{content:"";position:absolute;right:7px;top:0;bottom:0;width:12px;background:var(--f-preta)}
+  .faixas .f.preta::after{background:#c4262e}
+  .faixas small{font-size:14px;color:var(--cinza);margin-left:6px}
+  .horarios{list-style:none}
+  .horarios li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--trama);font-size:17px}
+  .horarios li:last-child{border-bottom:0}
+  .horarios .h{font-family:"Archivo";font-stretch:80%;font-weight:750;font-size:22px;line-height:1.1;white-space:nowrap}
+  .turma .btn{margin-top:26px;width:100%;justify-content:center}
+  .turma .nota{font-size:14px;color:var(--cinza);margin-top:10px;text-align:center}
+
+  /* ---------- primeira aula: é uma sequência de verdade ---------- */
+  .primeira{background:var(--tinta);color:var(--kimono)}
+  .primeira .intro{color:#b9bec7}
+  .passos{list-style:none;margin-top:44px;display:grid;gap:0;counter-reset:p}
+  @media (min-width:860px){.passos{grid-template-columns:repeat(4,1fr)}}
+  .passos li{counter-increment:p;padding:26px 24px 30px 0;border-top:3px solid var(--f-branca);position:relative}
+  .passos li:nth-child(2){border-color:var(--f-azul)}
+  .passos li:nth-child(3){border-color:var(--f-roxa)}
+  .passos li:nth-child(4){border-color:var(--f-marrom)}
+  .passos li::before{content:counter(p);font-family:"Archivo";font-stretch:70%;font-weight:850;font-size:56px;line-height:1;display:block;color:#fff}
+  .passos h3{font-size:20px;margin-top:12px}
+  .passos p{color:#b9bec7;margin-top:6px;max-width:30ch}
+
+  /* ---------- por que os pais escolhem ---------- */
+  .motivos{margin-top:40px;display:grid;gap:0}
+  @media (min-width:860px){.motivos{grid-template-columns:1fr 1fr;column-gap:56px}}
+  .motivo{padding:26px 0;border-top:2px solid var(--tinta)}
+  .motivo h3{font-family:"Archivo";font-stretch:78%;font-weight:800;font-size:30px;line-height:1.05}
+  .motivo p{margin-top:8px;color:var(--cinza);max-width:44ch}
+
+  /* ---------- avaliações ---------- */
+  .avaliacoes{background:var(--trama)}
+  .nota-google{display:flex;align-items:baseline;gap:14px;margin-top:20px}
+  .nota-google b{font-family:"Archivo";font-stretch:72%;font-weight:850;font-size:84px;line-height:.9}
+  .nota-google span{color:var(--cinza)}
+  .depos{margin-top:36px;display:grid;gap:18px}
+  @media (min-width:860px){.depos{grid-template-columns:1fr 1fr}}
+  blockquote{background:#fff;border-radius:6px 26px 26px 26px;padding:26px 26px 22px;font-size:18px}
+  blockquote footer{margin-top:14px;font-size:15px;color:var(--cinza)}
+
+  /* ---------- perguntas dos pais ---------- */
+  .faq{margin-top:34px;max-width:780px}
+  details{border-top:2px solid var(--tinta)}
+  details:last-child{border-bottom:2px solid var(--tinta)}
+  summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;position:relative;font-weight:700;font-size:19px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"";position:absolute;right:6px;top:50%;width:16px;height:16px;margin-top:-8px;
+    background:linear-gradient(var(--tinta),var(--tinta)) center/16px 3px no-repeat,linear-gradient(var(--tinta),var(--tinta)) center/3px 16px no-repeat;transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 0 24px;max-width:62ch;color:#3a3f48}
+
+  /* ---------- chamada final ---------- */
+  .final{background:var(--tatame);color:var(--kimono);text-align:left}
+  .final h2{max-width:14ch}
+  .final p{margin-top:16px;max-width:44ch;color:#dfe7f6;font-size:18px}
+  .final .acoes{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
+  .endereco{margin-top:48px;padding-top:28px;border-top:1px solid rgba(255,255,255,.25);display:grid;gap:18px;font-size:16px;color:#dfe7f6}
+  @media (min-width:860px){.endereco{grid-template-columns:repeat(3,1fr)}}
+  .endereco b{display:block;color:#fff;font-size:17px}
+
+  .rodape{background:var(--tinta);color:#b9bec7;font-size:14px;padding:26px 0}
+  .rodape .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+  .demo{color:var(--f-amarela)}
+  .flutuante{color:#fff;position:fixed;right:16px;bottom:16px;z-index:45;width:58px;height:58px;border-radius:50%;background:var(--wpp);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .flutuante svg{width:30px;height:30px}
+</style>
+</head>
+<body>
+
+<div class="progresso" id="progresso" aria-hidden="true">
+  <div class="tarja"><span class="grau"></span><span class="grau"></span><span class="grau"></span><span class="grau"></span></div>
+</div>
+
+<header>
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Guarda Jiu-Jitsu, início">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="12" width="28" height="8" fill="#16181d"/><rect x="19" y="12" width="7" height="8" fill="#c4262e"/><path d="M14 20 l-4 9 M18 20 l4 9" stroke="#16181d" stroke-width="3" fill="none"/></svg>
+      <span>Guarda Jiu-Jitsu</span>
+    </a>
+    <a class="btn btn-wpp btn-sm" href="#turmas"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-wpp"/></svg><span class="so-longo">Aula experimental grátis</span><span class="so-curto">Aula grátis</span></a>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="abertura">
+    <div class="wrap">
+     <div class="grade">
+     <div>
+      <h1 class="d">Seu filho no tatame, na turma certa pra idade dele.</h1>
+      <p class="sub">Turmas a partir de 4 anos e adulto do zero. Escolha a idade, veja os horários e marque a primeira aula pelo WhatsApp.</p>
+      <div class="acoes">
+        <a class="btn btn-wpp" href="#turmas"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-wpp"/></svg>Ver turmas e horários</a>
+        <a class="btn btn-linha" href="#primeira-aula">Como é a primeira aula</a>
+      </div>
+      <div class="fatos">
+        <div><b>12 anos</b>no mesmo endereço</div>
+        <div><b>5 turmas</b>separadas por idade</div>
+        <div><b>4,9</b>no Google, 140 avaliações</div>
+      </div>
+     </div>
+      <ol class="escada" aria-label="O caminho das faixas">
+        <li><span>Pequenos e Kids</span><i class="f" style="--w:42%;background:var(--f-cinza)"></i></li>
+        <li><span></span><i class="f" style="--w:50%;background:var(--f-amarela)"></i></li>
+        <li><span></span><i class="f" style="--w:58%;background:var(--f-laranja)"></i></li>
+        <li><span>Juvenil</span><i class="f" style="--w:66%;background:var(--f-verde)"></i></li>
+        <li><span>Adulto</span><i class="f" style="--w:74%;background:var(--f-branca)"></i></li>
+        <li><span></span><i class="f" style="--w:80%;background:var(--f-azul);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)"></i></li>
+        <li><span></span><i class="f" style="--w:86%;background:var(--f-roxa)"></i></li>
+        <li><span></span><i class="f" style="--w:93%;background:var(--f-marrom)"></i></li>
+        <li><span>Faixa preta</span><i class="f preta" style="--w:100%;background:var(--f-preta)"></i></li>
+      </ol>
+     </div>
+      <div class="faixa-grande" aria-hidden="true"><div class="tarja"><i></i><i></i><i></i><i></i></div></div>
+    </div>
+  </div>
+
+  <section id="turmas">
+    <div class="wrap">
+      <h2 class="d">Qual a idade de quem vai treinar?</h2>
+      <p class="intro">Cada turma tem ritmo, regras e faixas próprias. Toque na idade e veja a turma, os dias e os horários.</p>
+
+      <div class="idades" role="group" aria-label="Escolha a idade">
+        <button type="button" data-t="pequenos" aria-pressed="false">4 a 6 anos</button>
+        <button type="button" data-t="kids" aria-pressed="true">7 a 10 anos</button>
+        <button type="button" data-t="juvenil" aria-pressed="false">11 a 15 anos</button>
+        <button type="button" data-t="iniciante" aria-pressed="false">16+ e nunca treinei</button>
+        <button type="button" data-t="adulto" aria-pressed="false">16+ e já treino</button>
+      </div>
+
+      <div class="turma" aria-live="polite">
+        <div class="lado">
+          <h3 id="t-nome">Kids</h3>
+          <div class="faixa-idade" id="t-idade">7 a 10 anos</div>
+          <p class="desc" id="t-desc"></p>
+          <div class="faixas" id="t-faixas"></div>
+        </div>
+        <div class="lado">
+          <ul class="horarios" id="t-horarios"></ul>
+          <a class="btn btn-wpp" id="t-cta" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-wpp"/></svg><span id="t-cta-txt">Marcar experimental na turma Kids</span></a>
+          <p class="nota">A mensagem já vai pronta com a turma escolhida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="primeira" id="primeira-aula">
+    <div class="wrap">
+      <h2 class="d">A primeira aula, do começo ao fim</h2>
+      <p class="intro">Ninguém chega sabendo. O professor recebe quem é novo e explica tudo antes de entrar no tatame.</p>
+      <ol class="passos">
+        <li><h3>Escolha a turma</h3><p>Pela idade, aqui em cima. Na dúvida entre duas, a gente indica.</p></li>
+        <li><h3>Chame no WhatsApp</h3><p>Confirmamos o dia e o horário e tiramos qualquer dúvida antes.</p></li>
+        <li><h3>Venha de roupa confortável</h3><p>Camiseta e bermuda servem. Se quiser, emprestamos um kimono.</p></li>
+        <li><h3>Treine e decida depois</h3><p>Os pais podem assistir a aula das crianças. Sem compromisso de matrícula.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="d">O que os pais contam depois de alguns meses</h2>
+      <div class="motivos">
+        <div class="motivo"><h3>Respeito dentro e fora do tatame</h3><p>Cumprimentar o professor, esperar a vez, cuidar do colega. A rotina da aula ensina isso sem sermão.</p></div>
+        <div class="motivo"><h3>Gasto de energia com regra</h3><p>A criança corre, rola e se cansa, mas com começo, meio e fim. Muitos pais notam o sono melhorando.</p></div>
+        <div class="motivo"><h3>Confiança para se defender</h3><p>O jiu-jitsu ensina a controlar sem machucar. A criança aprende a sair de uma situação ruim com calma.</p></div>
+        <div class="motivo"><h3>Meta visível</h3><p>Cada grau na faixa é uma conquista que a criança vê e mostra em casa.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="avaliacoes">
+    <div class="wrap">
+      <h2 class="d">Quem treina aqui recomenda</h2>
+      <div class="nota-google"><b>4,9</b><span>no Google, com 140 avaliações</span></div>
+      <div class="depos">
+        <blockquote>“Meu filho era muito tímido e hoje chega na aula cumprimentando todo mundo. O professor tem uma paciência enorme com os pequenos.”<footer>Mãe do Davi, turma Kids</footer></blockquote>
+        <blockquote>“Comecei com 38 anos sem nunca ter treinado nada. A turma de iniciante me deixou à vontade desde o primeiro dia.”<footer>Rafael, adulto iniciante</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="d">Perguntas que os pais sempre fazem</h2>
+      <div class="faq">
+        <details><summary>Com que idade meu filho pode começar?</summary><p>A partir de 4 anos, na turma dos pequenos. Nessa idade a aula é quase toda em forma de brincadeira, com rolamentos e equilíbrio.</p></details>
+        <details><summary>Jiu-jitsu machuca?</summary><p>Nas turmas infantis não tem golpe no rosto nem chute. O treino é de controle e o professor para a luta a qualquer sinal. Pequenos arranhões e roxos podem acontecer, como em qualquer esporte.</p></details>
+        <details><summary>Precisa comprar kimono para começar?</summary><p>Não. As primeiras aulas podem ser de camiseta e bermuda, e emprestamos kimono para a experimental. O kimono só é necessário depois da matrícula.</p></details>
+        <details><summary>Posso assistir à aula do meu filho?</summary><p>Pode. Temos um espaço para os pais ao lado do tatame.</p></details>
+        <details><summary>Quanto custa a mensalidade?</summary><p>Os planos mudam conforme a frequência e se há irmãos treinando. Chame no WhatsApp que passamos os valores certinhos.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="agendar">
+    <div class="wrap">
+      <h2 class="d">A primeira aula é por nossa conta</h2>
+      <p>Mande uma mensagem com a idade de quem vai treinar. A gente responde com a turma e o próximo horário livre.</p>
+      <div class="acoes">
+        <a class="btn btn-wpp" href="https://wa.me/?text=Oi!%20Quero%20agendar%20uma%20aula%20experimental%20na%20Guarda%20Jiu-Jitsu." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-wpp"/></svg>Agendar aula experimental</a>
+      </div>
+      <div class="endereco">
+        <div><b>Endereço</b>Rua das Acácias, 120, Centro</div>
+        <div><b>Funcionamento</b>Segunda a sexta, 6h às 21h30<br>Sábado, 9h às 12h</div>
+        <div><b>Estacionamento</b>Vagas na rua e estacionamento conveniado ao lado</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <span>Guarda Jiu-Jitsu</span>
+    <span class="demo">Página de demonstração feita pela DEVitor. Nome, números, horários e avaliações são fictícios.</span>
+  </div>
+</footer>
+
+<a class="flutuante" href="#turmas" aria-label="Agendar aula experimental pelo WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-wpp" fill="#fff"/></svg></a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-wpp" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3Z"/></symbol>
+</svg>
+
+<script>
+  // ---------- turmas ----------
+  const TURMAS = {
+    pequenos:{nome:"Pequenos",idade:"4 a 6 anos",
+      desc:"Aula curta e cheia de brincadeira: rolamentos, equilíbrio e os primeiros movimentos do jiu-jitsu. A criança aprende a ouvir o professor e a respeitar o colega.",
+      faixas:["branca","cinza"],faixasTxt:"Faixa branca e cinza",
+      horarios:[["Terça e quinta","17h30"],["Sábado","9h"]]},
+    kids:{nome:"Kids",idade:"7 a 10 anos",
+      desc:"Técnica de verdade com linguagem de criança. Cada aula termina com luta orientada e o professor acompanha a evolução de cada um até o próximo grau.",
+      faixas:["cinza","amarela","laranja"],faixasTxt:"Faixa cinza, amarela e laranja",
+      horarios:[["Segunda, quarta e sexta","17h30"],["Sábado","10h"]]},
+    juvenil:{nome:"Juvenil",idade:"11 a 15 anos",
+      desc:"Turma para a idade em que eles querem desafio. Mais técnica, preparação física e quem quiser pode competir em campeonatos da região.",
+      faixas:["laranja","verde"],faixasTxt:"Faixa laranja e verde",
+      horarios:[["Segunda, quarta e sexta","18h30"]]},
+    iniciante:{nome:"Adulto iniciante",idade:"16 anos ou mais, sem experiência",
+      desc:"Para quem nunca treinou. Começa pelo básico, no seu ritmo, com gente que também está aprendendo. Ninguém é jogado para lutar com faixa preta no primeiro dia.",
+      faixas:["branca","azul"],faixasTxt:"Faixa branca até a azul",
+      horarios:[["Terça e quinta","19h30"],["Sábado","11h"]]},
+    adulto:{nome:"Adulto",idade:"16 anos ou mais, já treina",
+      desc:"Treino completo para todas as faixas: técnica, drills e rola no fim. Quem vem de outra academia pode fazer a experimental aqui também.",
+      faixas:["azul","roxa","marrom","preta"],faixasTxt:"Todas as faixas",
+      horarios:[["Segunda, quarta e sexta","19h30"],["Terça e quinta","6h30"]]}
+  };
+  const $ = id => document.getElementById(id);
+  function mostra(chave){
+    const t = TURMAS[chave];
+    $("t-nome").textContent = t.nome;
+    $("t-idade").textContent = t.idade;
+    $("t-desc").textContent = t.desc;
+    $("t-faixas").innerHTML = t.faixas.map(f=>`<span class="f ${f}" style="background:var(--f-${f})" title="Faixa ${f}"></span>`).join("") + `<small>${t.faixasTxt}</small>`;
+    $("t-horarios").innerHTML = t.horarios.map(([d,h])=>`<li><span>${d}</span><span class="h">${h}</span></li>`).join("");
+    $("t-cta-txt").textContent = `Marcar experimental na turma ${t.nome}`;
+    const msg = `Oi! Quero agendar uma aula experimental na turma ${t.nome} (${t.idade}).`;
+    $("t-cta").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+    document.querySelectorAll(".idades button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.t===chave));
+  }
+  document.querySelectorAll(".idades button").forEach(b=>b.addEventListener("click",()=>mostra(b.dataset.t)));
+  mostra("kids");
+
+  // ---------- faixa de progresso: branca a preta, 4 graus por faixa ----------
+  const CORES = ["branca","azul","roxa","marrom","preta"];
+  const barra = $("progresso"), graus = barra.querySelectorAll(".grau");
+  let ultimo = -1;
+  function atualiza(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? Math.min(1, scrollY / max) : 0;
+    const passo = Math.min(CORES.length * 5 - 1, Math.floor(p * CORES.length * 5));
+    if (passo === ultimo) return;
+    ultimo = passo;
+    const faixa = CORES[Math.floor(passo / 5)], g = passo % 5;
+    barra.style.background = `var(--f-${faixa})`;
+    barra.classList.toggle("preta", faixa === "preta");
+    graus.forEach((el,i)=>el.classList.toggle("on", i < g));
+  }
+  addEventListener("scroll",()=>requestAnimationFrame(atualiza),{passive:true});
+  atualiza();
+</script>
+</body>
+</html>

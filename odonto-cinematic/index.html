@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Opala Odontologia | Implantes e lentes de porcelana em São Paulo</title>
+  <meta name="description" content="Implantes, lentes de porcelana, clareamento e alinhadores planejados em 3D. Você vê o resultado na própria boca antes de qualquer desgaste. Agende sua avaliação.">
+  <meta name="theme-color" content="#0E131A">
+  <meta property="og:title" content="Opala Odontologia">
+  <meta property="og:description" content="Um sorriso que parece seu. Implantes e estética dental planejados em 3D.">
+  <meta property="og:image" content="assets/seq/sorriso/d/085.webp">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Gilda+Display&display=swap" rel="stylesheet">
+
+  <link rel="preload" as="image" href="assets/seq/sorriso/d/001.webp" media="(min-width: 768px)">
+  <link rel="preload" as="image" href="assets/seq/sorriso/m/001.webp" media="(max-width: 767px)">
+
+  <link rel="stylesheet" href="assets/vendor/lenis/lenis.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="importmap">
+    { "imports": { "three": "./assets/vendor/three/three.module.min.js" } }
+  </script>
+</head>
+<body class="carregando">
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Abertura: conta o carregamento dos quadros do sorriso -->
+  <div class="abertura" aria-hidden="true">
+    <div class="abertura__marca">Opala</div>
+    <div class="abertura__rodape">
+      <span>Odontologia estética e implantes</span>
+      <span class="abertura__contagem"><b data-contagem>0</b>%</span>
+    </div>
+    <div class="abertura__barra"><i></i></div>
+  </div>
+
+  <div class="grao" aria-hidden="true"></div>
+
+  <header class="topo" data-topo>
+    <a class="marca" href="#inicio" aria-label="Opala Odontologia, voltar ao início">Opala</a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#implante">Implante</a>
+      <a href="#metodo">Como funciona</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="botao botao--pequeno" href="#avaliacao" data-magnetico>Agendar avaliação</a>
+    <button class="menu-movel__abrir" type="button" aria-expanded="false" aria-controls="menu-movel">
+      <span class="menu-movel__icone" aria-hidden="true"><i></i><i></i></span>
+      <span class="sr">Abrir menu</span>
+    </button>
+  </header>
+
+  <div class="menu-movel" id="menu-movel" hidden>
+    <nav aria-label="Menu móvel">
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#implante">Implante</a>
+      <a href="#metodo">Como funciona</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="botao" href="#avaliacao">Agendar avaliação</a>
+  </div>
+
+  <main id="conteudo">
+
+    <!-- 1. Herói: o sorriso acontece conforme a pessoa rola -->
+    <section class="heroi" id="inicio" data-tema="escuro" aria-labelledby="heroi-titulo">
+      <div class="heroi__palco">
+        <canvas class="heroi__canvas" aria-hidden="true"></canvas>
+        <div class="heroi__veu" aria-hidden="true"></div>
+        <div class="heroi__luz" aria-hidden="true"></div>
+
+        <div class="heroi__texto">
+          <p class="heroi__local">Odontologia estética e implantes em São Paulo</p>
+          <h1 class="heroi__titulo" id="heroi-titulo">Um&nbsp;sorriso que parece seu.</h1>
+          <p class="heroi__apoio">Implantes, lentes de porcelana e alinhadores planejados em 3D. Você vê o resultado na própria boca antes de qualquer desgaste.</p>
+          <div class="heroi__acoes">
+            <a class="botao" href="#avaliacao" data-magnetico>Agendar avaliação</a>
+            <a class="link-sublinhado" href="#metodo">Ver como funciona</a>
+          </div>
+        </div>
+
+        <p class="legenda legenda--1" aria-hidden="true">Proporção pensada para o seu rosto, não só para os dentes.</p>
+        <p class="legenda legenda--2" aria-hidden="true">Cor e formato escolhidos com você, no espelho.</p>
+
+        <div class="heroi__rolar" aria-hidden="true"><span>Role a página</span><i></i></div>
+      </div>
+    </section>
+
+    <!-- 2. Manifesto: palavras acendem com o scroll -->
+    <section class="manifesto" data-tema="escuro" aria-label="Nossa forma de trabalhar">
+      <p class="manifesto__texto" data-palavras>Antes de mexer em qualquer dente, a gente conversa sobre como você quer se sentir ao sorrir. Depois planeja em 3D, mostra o resultado na sua boca e só então começa.</p>
+    </section>
+
+    <!-- 3. Refletor: a luz acende e a página clareia -->
+    <section class="refletor" data-tema="escuro" aria-labelledby="refletor-titulo">
+      <div class="refletor__palco">
+        <canvas class="refletor__canvas" aria-hidden="true"></canvas>
+        <div class="refletor__veu" aria-hidden="true"></div>
+        <div class="refletor__flash" aria-hidden="true"></div>
+        <div class="refletor__texto">
+          <h2 id="refletor-titulo">A luz só acende quando o plano está pronto.</h2>
+          <p>Nenhum procedimento começa sem tomografia, escaneamento digital e o seu sim ao ensaio do sorriso.</p>
+        </div>
+        <div class="refletor__porcelana" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 4. Tratamentos -->
+    <section class="tratamentos" id="tratamentos" data-tema="claro" aria-labelledby="tratamentos-titulo">
+      <div class="envoltorio tratamentos__grade">
+        <div class="tratamentos__cabeca">
+          <h2 id="tratamentos-titulo" data-linhas>O que dá para mudar no seu sorriso</h2>
+          <p class="intro">Cinco caminhos, com prazos reais. Na avaliação, a gente indica o que faz sentido para o seu caso, inclusive quando a melhor resposta é não fazer nada.</p>
+        </div>
+
+        <div class="tratamentos__midia" aria-hidden="true">
+          <div class="moldura" data-moldura>
+            <video class="moldura__item ativo" data-midia="implantes" muted playsinline loop preload="none" poster="assets/video/modelo.webp" src="assets/video/modelo.mp4"></video>
+            <video class="moldura__item" data-midia="lentes" muted playsinline loop preload="none" poster="assets/video/ceramista.webp" src="assets/video/ceramista.mp4"></video>
+            <video class="moldura__item" data-midia="clareamento" muted playsinline loop preload="none" poster="assets/video/clareamento.webp" src="assets/video/clareamento.mp4"></video>
+            <img class="moldura__item" data-midia="alinhadores" src="assets/img/alinhador-900.webp" srcset="assets/img/alinhador-900.webp 900w, assets/img/alinhador.webp 1920w" sizes="(min-width: 960px) 40vw, 90vw" alt="" loading="lazy" decoding="async">
+            <img class="moldura__item" data-midia="reabilitacao" src="assets/img/protocolo-900.webp" srcset="assets/img/protocolo-900.webp 900w, assets/img/protocolo.webp 1920w" sizes="(min-width: 960px) 40vw, 90vw" alt="" loading="lazy" decoding="async">
+            <span class="moldura__brilho"></span>
+          </div>
+          <p class="moldura__legenda" data-moldura-legenda>Modelo impresso em 3D a partir do escaneamento.</p>
+        </div>
+
+        <ol class="tratamentos__lista" role="list">
+          <li class="tratamento ativo" data-tratamento="implantes" data-legenda="Modelo impresso em 3D a partir do escaneamento.">
+            <button class="tratamento__botao" type="button" aria-expanded="true" aria-controls="trat-implantes">
+              <span class="tratamento__nome">Implantes</span>
+              <span class="tratamento__prazo">3 a 6 meses</span>
+            </button>
+            <div class="tratamento__corpo" id="trat-implantes">
+              <p>Repõe um dente perdido com uma raiz de titânio e uma coroa em zircônia. Quando o osso permite, você sai da cirurgia com um dente provisório.</p>
+              <a class="link-sublinhado" href="#implante">Ver o implante peça por peça</a>
+            </div>
+          </li>
+          <li class="tratamento" data-tratamento="lentes" data-legenda="Cerâmica pintada à mão, camada por camada.">
+            <button class="tratamento__botao" type="button" aria-expanded="false" aria-controls="trat-lentes">
+              <span class="tratamento__nome">Lentes de porcelana</span>
+              <span class="tratamento__prazo">2 a 4 semanas</span>
+            </button>
+            <div class="tratamento__corpo" id="trat-lentes">
+              <p>Lâminas de 0,3 a 0,5 mm que corrigem cor, formato e pequenos espaços. Em boa parte dos casos, com pouco ou nenhum desgaste do dente.</p>
+              <a class="link-sublinhado" href="#avaliacao" data-preseleciona="formato">Avaliar lentes no meu caso</a>
+            </div>
+          </li>
+          <li class="tratamento" data-tratamento="clareamento" data-legenda="Luz de ativação no consultório.">
+            <button class="tratamento__botao" type="button" aria-expanded="false" aria-controls="trat-clareamento">
+              <span class="tratamento__nome">Clareamento</span>
+              <span class="tratamento__prazo">2 a 3 sessões</span>
+            </button>
+            <div class="tratamento__corpo" id="trat-clareamento">
+              <p>Sessões no consultório combinadas com moldeiras para usar em casa, com controle de sensibilidade em cada etapa.</p>
+              <a class="link-sublinhado" href="#avaliacao" data-preseleciona="cor">Avaliar clareamento no meu caso</a>
+            </div>
+          </li>
+          <li class="tratamento" data-tratamento="alinhadores" data-legenda="Placas trocadas a cada 1 ou 2 semanas.">
+            <button class="tratamento__botao" type="button" aria-expanded="false" aria-controls="trat-alinhadores">
+              <span class="tratamento__nome">Alinhadores invisíveis</span>
+              <span class="tratamento__prazo">6 a 18 meses</span>
+            </button>
+            <div class="tratamento__corpo" id="trat-alinhadores">
+              <p>Placas transparentes que você tira para comer. Antes de começar, você vê a simulação do movimento de cada dente.</p>
+              <a class="link-sublinhado" href="#avaliacao" data-preseleciona="desalinhados">Avaliar alinhadores no meu caso</a>
+            </div>
+          </li>
+          <li class="tratamento" data-tratamento="reabilitacao" data-legenda="Prótese fixa em zircônia sobre quatro implantes.">
+            <button class="tratamento__botao" type="button" aria-expanded="false" aria-controls="trat-reabilitacao">
+              <span class="tratamento__nome">Reabilitação completa</span>
+              <span class="tratamento__prazo">4 a 8 meses</span>
+            </button>
+            <div class="tratamento__corpo" id="trat-reabilitacao">
+              <p>Prótese fixa sobre implantes para quem perdeu vários dentes ou usa dentadura. Ela não sai da boca e não cobre o céu da boca.</p>
+              <a class="link-sublinhado" href="#avaliacao" data-preseleciona="protese">Avaliar reabilitação no meu caso</a>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. Implante peça por peça (3D) -->
+    <section class="implante" id="implante" data-tema="claro" aria-labelledby="implante-titulo">
+      <div class="implante__palco">
+        <canvas class="implante__canvas" aria-hidden="true"></canvas>
+
+        <div class="implante__texto">
+          <div class="implante__fase ativa" data-fase="0">
+            <h2 id="implante-titulo">Um implante, peça por peça.</h2>
+            <p>Quatro peças substituem um dente inteiro, da raiz à coroa. Role para separar cada uma, na ordem em que entram na boca.</p>
+          </div>
+          <div class="implante__fase" data-fase="1">
+            <h2>Montado, ninguém percebe.</h2>
+            <ul class="implante__fatos" role="list">
+              <li>Tomografia 3D antes da cirurgia</li>
+              <li>Cirurgia guiada por guia impresso</li>
+              <li>Provisório no mesmo dia, quando indicado</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="implante__rotulos" aria-hidden="true">
+          <div class="rotulo" data-peca="coroa"><span class="rotulo__num">04</span><b>Coroa em zircônia</b><span class="rotulo__desc">Feita no laboratório com a cor e a translucidez dos seus dentes vizinhos.</span></div>
+          <div class="rotulo" data-peca="parafuso"><span class="rotulo__num">03</span><b>Parafuso de fixação</b><span class="rotulo__desc">Prende o pilar com torque calibrado e sai na manutenção, sem quebrar nada.</span></div>
+          <div class="rotulo" data-peca="pilar"><span class="rotulo__num">02</span><b>Pilar dourado</b><span class="rotulo__desc">Liga o implante à coroa. O tom dourado evita que a gengiva fina fique acinzentada.</span></div>
+          <div class="rotulo" data-peca="implante"><span class="rotulo__num">01</span><b>Implante de titânio</b><span class="rotulo__desc">Fica no osso, no lugar da raiz. A superfície tratada ajuda o osso a se ligar ao titânio em 3 a 6 meses.</span></div>
+        </div>
+
+        <!-- Versão em texto das peças para leitores de tela e para quando o 3D não carrega -->
+        <ol class="sr" aria-label="Peças do implante, na ordem de instalação">
+          <li>Implante de titânio: fica no osso, no lugar da raiz.</li>
+          <li>Pilar dourado: liga o implante à coroa.</li>
+          <li>Parafuso de fixação: prende o pilar e pode ser removido na manutenção.</li>
+          <li>Coroa em zircônia: feita com a cor e a translucidez dos dentes vizinhos.</li>
+        </ol>
+
+        <p class="implante__dica" aria-hidden="true">Ordem de instalação, de baixo para cima</p>
+      </div>
+    </section>
+
+    <!-- 6. Como funciona -->
+    <section class="metodo" id="metodo" data-tema="escuro" aria-labelledby="metodo-titulo">
+      <div class="metodo__palco">
+        <div class="metodo__cabeca envoltorio">
+          <h2 id="metodo-titulo" data-linhas>Como funciona, da conversa ao último ajuste</h2>
+          <div class="metodo__progresso" aria-hidden="true"><i></i></div>
+        </div>
+        <ol class="metodo__trilho" role="list">
+          <li class="etapa">
+            <div class="etapa__midia"><img src="assets/img/consulta-900.webp" srcset="assets/img/consulta-900.webp 900w, assets/img/consulta.webp 1920w" sizes="(min-width: 960px) 46vw, 90vw" alt="Dentista mostra o modelo 3D da arcada em uma tela para a paciente" loading="lazy" decoding="async"></div>
+            <div class="etapa__texto">
+              <span class="etapa__num">01</span>
+              <h3>Conversa</h3>
+              <p>Uma hora para entender o que te incomoda. Fazemos fotos e vídeos do seu sorriso falando e rindo.</p>
+            </div>
+          </li>
+          <li class="etapa">
+            <div class="etapa__midia"><video muted playsinline loop preload="none" poster="assets/video/tomografia.webp" src="assets/video/tomografia.mp4" aria-label="Tomografia 3D da arcada girando na tela"></video></div>
+            <div class="etapa__texto">
+              <span class="etapa__num">02</span>
+              <h3>Diagnóstico 3D</h3>
+              <p>Tomografia e escaneamento digital, sem massa de moldagem. Seu sorriso vira um modelo que dá para girar e medir.</p>
+            </div>
+          </li>
+          <li class="etapa">
+            <div class="etapa__midia"><video muted playsinline loop preload="none" poster="assets/video/ensaio.webp" src="assets/video/ensaio.mp4" aria-label="Dentista compara a cor de uma faceta com os dentes do paciente"></video></div>
+            <div class="etapa__texto">
+              <span class="etapa__num">03</span>
+              <h3>Ensaio na boca</h3>
+              <p>Aplicamos uma resina provisória sobre os dentes para você ver e sentir o resultado antes de decidir.</p>
+            </div>
+          </li>
+          <li class="etapa">
+            <div class="etapa__midia"><img src="assets/img/execucao-900.webp" srcset="assets/img/execucao-900.webp 900w, assets/img/execucao.webp 1920w" sizes="(min-width: 960px) 46vw, 90vw" alt="Consultório à meia-luz durante um procedimento" loading="lazy" decoding="async"></div>
+            <div class="etapa__texto">
+              <span class="etapa__num">04</span>
+              <h3>Tratamento</h3>
+              <p>Cada procedimento segue o planejamento aprovado, com sedação consciente se você preferir.</p>
+            </div>
+          </li>
+          <li class="etapa">
+            <div class="etapa__midia"><img src="assets/img/acompanhamento-900.webp" srcset="assets/img/acompanhamento-900.webp 900w, assets/img/acompanhamento.webp 1920w" sizes="(min-width: 960px) 46vw, 90vw" alt="Mulher sorrindo de olhos fechados" loading="lazy" decoding="async"></div>
+            <div class="etapa__texto">
+              <span class="etapa__num">05</span>
+              <h3>Acompanhamento</h3>
+              <p>Revisões programadas e conversa direta com a sua dentista pelo WhatsApp.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 7. Monte sua avaliação -->
+    <section class="avaliacao" id="avaliacao" data-tema="claro" aria-labelledby="avaliacao-titulo">
+      <div class="envoltorio avaliacao__grade">
+        <div class="avaliacao__cabeca">
+          <h2 id="avaliacao-titulo" data-linhas>Monte sua primeira consulta</h2>
+          <p class="intro">Marque o que te incomoda. A gente prepara a avaliação certa e você chega sabendo o que esperar.</p>
+        </div>
+
+        <form class="avaliacao__form" data-avaliacao novalidate>
+          <fieldset class="grupo">
+            <legend>O que te incomoda hoje?</legend>
+            <div class="opcoes">
+              <label class="opcao"><input type="checkbox" name="queixa" value="falta"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Falta um ou mais dentes</span></label>
+              <label class="opcao"><input type="checkbox" name="queixa" value="cor"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Cor dos dentes</span></label>
+              <label class="opcao"><input type="checkbox" name="queixa" value="formato"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Formato ou tamanho</span></label>
+              <label class="opcao"><input type="checkbox" name="queixa" value="desalinhados"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Dentes desalinhados</span></label>
+              <label class="opcao"><input type="checkbox" name="queixa" value="protese"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Prótese ou dentadura que incomoda</span></label>
+              <label class="opcao"><input type="checkbox" name="queixa" value="dor"><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Dor ou sensibilidade</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo">
+            <legend>Quando você quer começar?</legend>
+            <div class="opcoes">
+              <label class="opcao"><input type="radio" name="quando" value="Este mês"><span>Este mês</span></label>
+              <label class="opcao"><input type="radio" name="quando" value="Nos próximos 3 meses"><span>Nos próximos 3 meses</span></label>
+              <label class="opcao"><input type="radio" name="quando" value="Só quero entender as opções"><span>Só quero entender as opções</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo">
+            <legend>Melhor horário</legend>
+            <div class="opcoes">
+              <label class="opcao"><input type="radio" name="horario" value="Manhã"><span>Manhã</span></label>
+              <label class="opcao"><input type="radio" name="horario" value="Tarde"><span>Tarde</span></label>
+              <label class="opcao"><input type="radio" name="horario" value="Depois das 18h"><span>Depois das 18h</span></label>
+              <label class="opcao"><input type="radio" name="horario" value="Sábado"><span>Sábado</span></label>
+            </div>
+          </fieldset>
+        </form>
+
+        <aside class="resumo" aria-labelledby="resumo-titulo">
+          <div class="resumo__cabeca">
+            <h3 id="resumo-titulo">Sua avaliação</h3>
+            <span class="resumo__contador" aria-hidden="true"><b data-contador>0</b> itens</span>
+          </div>
+          <div class="resumo__corpo" aria-live="polite">
+            <p class="resumo__vazio" data-vazio>Marque pelo menos um item para ver a indicação.</p>
+            <dl class="resumo__lista" data-resumo hidden>
+              <div><dt>Para conversar</dt><dd data-indicacao></dd></div>
+              <div><dt>Com quem</dt><dd data-quem></dd></div>
+              <div><dt>Duração</dt><dd data-duracao>60 minutos</dd></div>
+              <div><dt>Leve</dt><dd>Exames ou radiografias antigas, se tiver. A tomografia é feita aqui.</dd></div>
+            </dl>
+          </div>
+          <a class="botao resumo__botao" href="https://wa.me/5511900000000" target="_blank" rel="noopener" data-whatsapp data-magnetico>
+            <svg class="botao__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>
+            Enviar pelo WhatsApp
+          </a>
+          <p class="resumo__nota">Abre o WhatsApp com a mensagem pronta. Nada é enviado sem você tocar em enviar.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 8. Equipe -->
+    <section class="equipe" id="equipe" data-tema="claro" aria-labelledby="equipe-titulo">
+      <div class="envoltorio">
+        <div class="equipe__cabeca">
+          <h2 id="equipe-titulo" data-linhas>Quem cuida do seu sorriso</h2>
+          <p class="intro">Três especialistas que planejam juntos. Seu caso é discutido em equipe antes de chegar até você.</p>
+        </div>
+        <ul class="equipe__lista" role="list">
+          <li class="pessoa">
+            <div class="pessoa__foto"><img src="assets/img/dra-helena-900.webp" alt="Retrato da Dra. Helena Duarte segurando instrumentos odontológicos" loading="lazy" decoding="async"></div>
+            <h3>Dra. Helena Duarte</h3>
+            <p class="pessoa__area">Implantodontia e reabilitação</p>
+            <p class="pessoa__bio">Planeja cada implante na tomografia e opera com guia impresso.</p>
+            <p class="pessoa__cro">CRO&#8209;SP 00000</p>
+          </li>
+          <li class="pessoa">
+            <div class="pessoa__foto"><img src="assets/img/dr-rafael-900.webp" alt="Retrato do Dr. Rafael Moura no consultório" loading="lazy" decoding="async"></div>
+            <h3>Dr. Rafael Moura</h3>
+            <p class="pessoa__area">Prótese e lentes de porcelana</p>
+            <p class="pessoa__bio">Escolhe cor e formato com você e acompanha o ceramista no laboratório.</p>
+            <p class="pessoa__cro">CRO&#8209;SP 00000</p>
+          </li>
+          <li class="pessoa">
+            <div class="pessoa__foto"><img src="assets/img/dra-yumi-900.webp" alt="Retrato da Dra. Yumi Sato apoiada na cadeira odontológica" loading="lazy" decoding="async"></div>
+            <h3>Dra. Yumi Sato</h3>
+            <p class="pessoa__area">Ortodontia e alinhadores</p>
+            <p class="pessoa__bio">Simula o movimento de cada dente antes da primeira placa.</p>
+            <p class="pessoa__cro">CRO&#8209;SP 00000</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9. Depoimentos -->
+    <section class="depoimentos" data-tema="escuro" aria-labelledby="depoimentos-titulo">
+      <h2 class="sr" id="depoimentos-titulo">O que pacientes dizem</h2>
+      <div class="depoimentos__fundos" aria-hidden="true">
+        <img class="ativo" src="assets/img/depo-marina.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/depo-paulo.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/img/depo-bianca.webp" alt="" loading="lazy" decoding="async">
+      </div>
+      <div class="depoimentos__veu" aria-hidden="true"></div>
+      <div class="envoltorio depoimentos__conteudo">
+        <div class="depoimentos__falas" data-depoimentos>
+          <figure class="fala ativa">
+            <blockquote><p>Eu evitava sorrir em foto havia dez anos. Na primeira semana com as lentes, minha filha perguntou o que eu tinha feito no cabelo.</p></blockquote>
+            <figcaption>Marina, 41 anos, lentes de porcelana</figcaption>
+          </figure>
+          <figure class="fala">
+            <blockquote><p>Tinha pavor de dentista. Fiz os implantes com sedação e quase não lembro da cirurgia, só do café na saída.</p></blockquote>
+            <figcaption>Paulo, 58 anos, implantes</figcaption>
+          </figure>
+          <figure class="fala">
+            <blockquote><p>O ensaio na boca foi o que me convenceu. Vi o resultado antes de decidir qualquer coisa.</p></blockquote>
+            <figcaption>Bianca, 33 anos, alinhadores e clareamento</figcaption>
+          </figure>
+        </div>
+        <div class="depoimentos__controles">
+          <button type="button" class="seta" data-anterior aria-label="Depoimento anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div class="depoimentos__barras" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+          <button type="button" class="seta" data-proximo aria-label="Próximo depoimento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Contato -->
+    <section class="contato" id="contato" data-tema="escuro" aria-labelledby="contato-titulo">
+      <video class="contato__video" muted playsinline loop preload="none" poster="assets/video/cadeira.webp" src="assets/video/cadeira.mp4" aria-hidden="true"></video>
+      <div class="contato__veu" aria-hidden="true"></div>
+      <div class="envoltorio contato__conteudo">
+        <h2 id="contato-titulo" data-linhas>Sua primeira consulta é uma conversa.</h2>
+        <p class="contato__apoio">Uma hora, sem compromisso de tratamento. Você sai com um plano por escrito e o valor de cada etapa.</p>
+        <div class="contato__acoes">
+          <a class="botao botao--grande" href="https://wa.me/5511900000000?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o%20na%20Opala." target="_blank" rel="noopener" data-magnetico>
+            <svg class="botao__icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>
+            Agendar pelo WhatsApp
+          </a>
+          <a class="link-sublinhado" href="tel:+551130000000">Ou ligue (11) 3000-0000</a>
+        </div>
+        <dl class="contato__dados">
+          <div><dt>Endereço</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=Alameda%20Lorena%201820%20S%C3%A3o%20Paulo" target="_blank" rel="noopener">Alameda Lorena, 1820<br>Jardins, São Paulo</a></dd></div>
+          <div><dt>Horários</dt><dd>Segunda a sexta, das 8h às 20h<br>Sábado, das 8h às 13h</dd></div>
+          <div><dt>Estacionamento</dt><dd>Manobrista na porta, por conta da clínica</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape" data-tema="escuro">
+    <div class="rodape__marca" aria-hidden="true">Opala</div>
+    <div class="envoltorio rodape__grade">
+      <nav aria-label="Rodapé">
+        <a href="#tratamentos">Tratamentos</a>
+        <a href="#implante">Implante</a>
+        <a href="#metodo">Como funciona</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#avaliacao">Agendar avaliação</a>
+      </nav>
+      <div class="rodape__legal">
+        <p>Responsável técnica: Dra. Helena Duarte, CRO&#8209;SP 00000.</p>
+        <p>© 2026 Opala Odontologia.</p>
+        <p class="rodape__demo">Site demonstrativo criado pela DEVitor. Clínica, equipe e depoimentos são fictícios; imagens de banco gratuito (Pexels).</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/gsap/gsap.min.js" defer></script>
+  <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/gsap/SplitText.min.js" defer></script>
+  <script src="assets/vendor/gsap/ScrambleTextPlugin.min.js" defer></script>
+  <script src="assets/vendor/gsap/CustomEase.min.js" defer></script>
+  <script src="assets/vendor/lenis/lenis.min.js" defer></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

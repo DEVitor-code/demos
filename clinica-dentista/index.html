@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumi Odontologia · Implantodontia e estética</title>
+<meta name="description" content="Implantes dentários planejados com tomografia, facetas e reabilitação estética. Veja um implante se montar, peça por peça, e agende sua avaliação.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..500;1,6..96,400&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --grafite:#0f1114;
+    --grafite-2:#171a1e;
+    --osso:#ece8e1;
+    --nevoa:#9a9fa6;
+    --fio:rgba(236,232,225,.12);
+    --luz:#f4f7fb;
+    --gutter:clamp(18px,5vw,64px);
+    --serif:"Bodoni Moda",Didot,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--grafite);color:var(--osso);font:300 17px/1.65 "Hanken Grotesk",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--luz);outline-offset:4px;border-radius:4px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+  h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.02;font-optical-sizing:auto}
+  h2{font-size:clamp(40px,6.4vw,84px);max-width:13ch}
+  .intro{color:var(--nevoa);max-width:46ch;margin-top:22px;font-size:18px}
+  .rotulo{font-size:13px;letter-spacing:.06em;color:var(--nevoa)}
+
+  .btn{display:inline-flex;align-items:center;gap:14px;border-radius:999px;font:400 15px/1 "Hanken Grotesk";text-decoration:none;cursor:pointer;
+    padding:16px 26px;background:var(--osso);color:var(--grafite);white-space:nowrap;border:1px solid var(--osso);transition:background-color .25s,color .25s}
+  .btn:hover{background:transparent;color:var(--osso)}
+  .btn svg{width:16px;height:16px}
+  .btn-fio{background:transparent;color:var(--osso);border-color:rgba(236,232,225,.4)}
+  .btn-fio:hover{background:var(--osso);color:var(--grafite)}
+
+  /* ---------- topo ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:40;padding:22px 0;background:linear-gradient(rgba(15,17,20,.7),transparent)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .marca{text-decoration:none;display:flex;align-items:baseline;gap:10px}
+  .marca b{font-family:var(--serif);font-weight:400;font-size:26px;letter-spacing:.01em}
+  .marca span{font-size:13px;color:var(--nevoa)}
+  nav{display:none;gap:34px;font-size:14px}
+  nav a{text-decoration:none;color:var(--nevoa);transition:color .2s}
+  nav a:hover{color:var(--osso)}
+  @media (min-width:960px){nav{display:flex}}
+  header .btn{padding:11px 18px;font-size:14px}
+
+  /* ---------- sequência 3D ---------- */
+  .sequencia{position:relative;height:460vh;background:radial-gradient(70% 60% at 50% 46%,#2b3036 0%,#171a1e 55%,#0d0f12 100%)}
+  .palco{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+  .palco canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:pan-y;cursor:grab}
+  .palco canvas:active{cursor:grabbing}
+  .linhas{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-columns:repeat(4,1fr);max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+  .linhas i{border-left:1px solid rgba(236,232,225,.06)}
+  .linhas i:last-child{border-right:1px solid rgba(236,232,225,.06)}
+  @media (max-width:899px){.linhas{grid-template-columns:repeat(2,1fr)}.linhas i:nth-child(n+3){display:none}.linhas i:nth-child(2){border-right:1px solid rgba(236,232,225,.06)}}
+
+  .hud{position:absolute;inset:0;z-index:2;pointer-events:none;max-width:1240px;margin:0 auto;padding:110px var(--gutter) 36px;display:grid;grid-template-rows:auto 1fr auto}
+  .contador{display:flex;align-items:baseline;gap:14px;font-size:13px;color:var(--nevoa);transition:opacity .4s}
+  .contador b{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--osso)}
+  .etapas{position:relative;align-self:end}
+  .etapa{position:absolute;left:0;right:0;bottom:0;display:grid;gap:18px;opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s;pointer-events:none}
+  .etapa.ativa{opacity:1;transform:none;pointer-events:auto}
+  @media (min-width:900px){.etapa{max-width:min(560px,44vw)}}
+  .etapa h1{font-size:clamp(46px,6.4vw,96px);max-width:10ch}
+  .etapa h2{font-size:clamp(44px,6.4vw,96px)}
+  .etapa h1 em,.etapa h2 em{font-style:italic}
+  .etapa p{color:#b9bcc1;max-width:30ch;font-size:clamp(15px,1.4vw,17px)}
+  .etapa .btn{margin-top:22px}
+  .rodape-hud{display:flex;justify-content:space-between;align-items:center;margin-top:28px;font-size:13px;color:var(--nevoa);min-height:20px}
+  .progresso{position:relative;width:min(260px,40vw);height:1px;background:var(--fio)}
+  .progresso i{position:absolute;left:0;top:0;height:1px;background:var(--osso);width:0}
+  @media (max-width:899px){
+    .palco::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;pointer-events:none;background:linear-gradient(transparent,rgba(13,15,18,.78) 45%,rgba(13,15,18,.92))}
+    .hud{padding:92px var(--gutter) 24px}
+    .etapa h1{font-size:clamp(38px,11vw,52px)}
+    .etapa h2{font-size:clamp(40px,12vw,54px)}
+    .etapa p{font-size:15px}
+    .dica-arraste{display:none}
+  }
+
+  /* ---------- números ---------- */
+  .numeros{border-top:1px solid var(--fio);border-bottom:1px solid var(--fio)}
+  .numeros .grade{display:grid;grid-template-columns:repeat(2,1fr)}
+  @media (min-width:900px){.numeros .grade{grid-template-columns:repeat(4,1fr)}}
+  .numeros .item{padding:34px 0 32px;border-left:1px solid var(--fio);padding-left:22px}
+  .numeros .item:first-child{border-left:0;padding-left:0}
+  @media (max-width:899px){.numeros .item:nth-child(3){border-left:0;padding-left:0}.numeros .item:nth-child(n+3){border-top:1px solid var(--fio)}}
+  .numeros b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(34px,4vw,52px);line-height:1}
+  .numeros span{display:block;margin-top:12px;font-size:14px;color:var(--nevoa);max-width:20ch;line-height:1.45}
+
+  section{padding:clamp(88px,12vw,150px) 0}
+
+  /* ---------- tratamentos ---------- */
+  .cabeca{display:grid;gap:12px}
+  @media (min-width:900px){.cabeca{grid-template-columns:1.2fr .8fr;align-items:end}}
+  .lista{margin-top:64px;border-top:1px solid var(--fio)}
+  .lista details{border-bottom:1px solid var(--fio)}
+  .lista summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:30px 0}
+  .lista summary::-webkit-details-marker{display:none}
+  .lista summary h3{font-size:clamp(32px,4.6vw,58px);transition:font-style .2s}
+  .lista details[open] summary h3,.lista summary:hover h3{font-style:italic}
+  .lista summary small{display:block;color:var(--nevoa);font:300 16px/1.4 "Hanken Grotesk";margin-top:8px}
+  .mais{width:48px;height:48px;border-radius:50%;border:1px solid rgba(236,232,225,.3);display:grid;place-items:center;transition:transform .3s,background-color .3s}
+  .mais svg{width:16px;height:16px}
+  details[open] > summary .mais{transform:rotate(45deg);background:var(--osso);color:var(--grafite)}
+  .lista .corpo{display:grid;gap:24px;padding:0 0 36px}
+  @media (min-width:900px){.lista .corpo{grid-template-columns:1.3fr 1fr 1fr;gap:48px}}
+  .lista .corpo p{color:#b9bcc1;max-width:50ch}
+  .lista dl dt{font-size:13px;color:var(--nevoa)}
+  .lista dl dd{font-size:17px;margin-bottom:14px}
+
+  /* ---------- primeira consulta (sequência real) ---------- */
+  .consulta{background:var(--grafite-2)}
+  .consulta ol{list-style:none;margin-top:64px;display:grid;counter-reset:c;border-top:1px solid var(--fio)}
+  @media (min-width:900px){.consulta ol{grid-template-columns:repeat(4,1fr)}}
+  .consulta li{counter-increment:c;padding:28px 28px 8px 0}
+  @media (min-width:900px){.consulta li + li{border-left:1px solid var(--fio);padding-left:28px}}
+  @media (max-width:899px){.consulta li{border-bottom:1px solid var(--fio);padding-bottom:28px}}
+  .consulta li::before{content:counter(c,decimal-leading-zero);font-family:var(--serif);font-size:15px;color:var(--nevoa)}
+  .consulta li h3{font-size:30px;margin-top:22px}
+  .consulta li p{color:#b9bcc1;margin-top:10px;font-size:16px}
+
+  /* ---------- equipe ---------- */
+  .equipe .grade{margin-top:64px;display:grid;gap:0;border-top:1px solid var(--fio)}
+  @media (min-width:900px){.equipe .grade{grid-template-columns:1fr 1fr}}
+  .pessoa{display:flex;gap:24px;align-items:center;padding:32px 0;border-bottom:1px solid var(--fio)}
+  @media (min-width:900px){.pessoa + .pessoa{border-left:1px solid var(--fio);padding-left:32px}}
+  .pessoa .ini{flex:none;width:84px;height:84px;border-radius:50%;border:1px solid rgba(236,232,225,.3);display:grid;place-items:center;font-family:var(--serif);font-size:28px;font-style:italic}
+  .pessoa h3{font-size:30px}
+  .pessoa p{color:var(--nevoa);font-size:15px;margin-top:8px;line-height:1.5}
+
+  /* ---------- pacientes ---------- */
+  .pacientes{background:var(--grafite-2)}
+  .nota{display:flex;align-items:baseline;gap:16px;margin-top:20px}
+  .nota b{font-family:var(--serif);font-weight:400;font-size:clamp(72px,10vw,128px);line-height:.9}
+  .nota span{color:var(--nevoa);max-width:16ch;line-height:1.35}
+  .depos{margin-top:56px;display:grid;gap:48px}
+  @media (min-width:900px){.depos{grid-template-columns:1fr 1fr;gap:64px}}
+  blockquote{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.35;font-style:italic;border-top:1px solid var(--fio);padding-top:28px}
+  blockquote footer{font:300 15px/1.4 "Hanken Grotesk";font-style:normal;color:var(--nevoa);margin-top:20px}
+
+  /* ---------- dúvidas ---------- */
+  .faq{margin-top:56px;max-width:880px;border-top:1px solid var(--fio)}
+  .faq details{border-bottom:1px solid var(--fio)}
+  .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:26px 0;font-size:19px;font-weight:400}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq .mais{width:38px;height:38px;flex:none}
+  .faq details p{padding:0 0 28px;color:#b9bcc1;max-width:62ch}
+
+  /* ---------- chamada final, com o mesmo anel de luz do 3D ---------- */
+  .final{position:relative;overflow:hidden;text-align:center;padding:clamp(110px,16vw,190px) 0}
+  .final::before{content:"";position:absolute;left:50%;top:50%;width:min(620px,86vw);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+    border:1px solid rgba(244,247,251,.8);box-shadow:0 0 40px rgba(244,247,251,.25),inset 0 0 40px rgba(244,247,251,.12)}
+  .final .wrap{position:relative}
+  .final h2{margin:0 auto;max-width:11ch}
+  .final .intro{margin:22px auto 0}
+  .final .btn{margin-top:36px}
+  .info{border-top:1px solid var(--fio)}
+  .info .wrap{display:grid;gap:24px;padding-top:36px;padding-bottom:36px;font-size:15px;color:var(--nevoa)}
+  @media (min-width:900px){.info .wrap{grid-template-columns:repeat(3,1fr)}}
+  .info b{display:block;color:var(--osso);font-weight:400;margin-bottom:4px}
+  .rodape{border-top:1px solid var(--fio);padding:26px 0 34px;font-size:13px;color:var(--nevoa)}
+  .rodape .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Lumi Odontologia, início"><b>Lumi</b><span>Odontologia</span></a>
+    <nav aria-label="Seções">
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#avaliacao">Primeira consulta</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn btn-fio" href="#agendar">Agendar avaliação</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="sequencia" id="sequencia">
+    <div class="palco">
+      <canvas id="tela" aria-label="Implante dentário em 3D se montando: parafuso, pilar e coroa" role="img"></canvas>
+      <div class="linhas" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+      <div class="hud">
+        <div class="contador" id="contador" aria-hidden="true"><b id="contador-num">01</b><span>/ 03</span><span id="contador-nome">O implante</span></div>
+        <div class="etapas">
+          <div class="etapa ativa" data-de="0" data-ate="0.14">
+            <h1>Um dente novo, construído <em>com precisão</em>.</h1>
+            <div>
+              <p>Implantes planejados com tomografia e feitos sob medida. Role a página e acompanhe as três peças se encaixarem.</p>
+              <a class="btn" href="#agendar">Agendar avaliação<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+            </div>
+          </div>
+          <div class="etapa" data-de="0.14" data-ate="0.42">
+            <h2>O <em>implante</em></h2>
+            <p>Um pino de titânio ocupa o lugar da raiz. Nos meses seguintes o osso se une a ele, e é isso que dá firmeza ao dente novo.</p>
+          </div>
+          <div class="etapa" data-de="0.42" data-ate="0.68">
+            <h2>O <em>pilar</em></h2>
+            <p>A peça que liga o implante à coroa. É presa por dentro com um parafuso pequeno, fica na altura da gengiva e é escolhida para o formato da sua boca.</p>
+          </div>
+          <div class="etapa" data-de="0.68" data-ate="1.01">
+            <h2>A <em>coroa</em></h2>
+            <div>
+              <p>A parte que aparece. Feita na cor, no brilho e no formato dos seus dentes, para mastigar e sorrir sem pensar nisso.</p>
+              <a class="btn" href="#agendar">Agendar avaliação<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+            </div>
+          </div>
+        </div>
+        <div class="rodape-hud">
+          <div class="progresso" aria-hidden="true"><i id="barra"></i></div>
+          <span class="dica-arraste" id="dica">Arraste para girar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="numeros">
+    <div class="wrap grade">
+      <div class="item"><b>15 anos</b><span>de clínica no mesmo endereço</span></div>
+      <div class="item"><b>4,9</b><span>no Google, com 210 avaliações</span></div>
+      <div class="item"><b>Tomografia</b><span>feita na clínica, no dia da avaliação</span></div>
+      <div class="item"><b>Por escrito</b><span>plano e valores, antes de começar</span></div>
+    </div>
+  </div>
+
+  <section id="tratamentos">
+    <div class="wrap">
+      <div class="cabeca">
+        <h2>Tratamentos</h2>
+        <p class="intro">Toque em um tratamento para ver como funciona, para quem é indicado e quanto tempo costuma levar. O plano exato sai na avaliação.</p>
+      </div>
+      <div class="lista">
+        <details open>
+          <summary><div><h3>Implantes</h3><small>Para repor um dente ou a arcada inteira</small></div><span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary>
+          <div class="corpo">
+            <p>O implante substitui a raiz do dente perdido e recebe uma coroa por cima. Bem cuidado, funciona como um dente natural na mastigação e na fala.</p>
+            <dl><dt>Indicado para</dt><dd>Quem perdeu um ou mais dentes</dd><dt>Precisa de</dt><dd>Osso suficiente, avaliado na tomografia</dd></dl>
+            <dl><dt>Tempo médio</dt><dd>3 a 6 meses, do implante à coroa</dd><dt>Consultas</dt><dd>Cerca de 4</dd></dl>
+          </div>
+        </details>
+        <details>
+          <summary><div><h3>Lentes e facetas</h3><small>Forma, cor e alinhamento do sorriso</small></div><span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary>
+          <div class="corpo">
+            <p>Lâminas finas de porcelana ou camadas de resina aplicadas na frente dos dentes para corrigir forma, cor e pequenos espaços. O desenho do sorriso é planejado antes, com você.</p>
+            <dl><dt>Indicado para</dt><dd>Dentes escurecidos, pequenos ou desalinhados</dd><dt>Precisa de</dt><dd>Gengiva saudável</dd></dl>
+            <dl><dt>Tempo médio</dt><dd>2 a 4 semanas</dd><dt>Consultas</dt><dd>3 a 4</dd></dl>
+          </div>
+        </details>
+        <details>
+          <summary><div><h3>Reabilitação completa</h3><small>Quando é preciso refazer vários dentes</small></div><span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary>
+          <div class="corpo">
+            <p>Combina implantes, coroas e ajuste da mordida num plano único. Para quem usa dentadura, tem muitos dentes comprometidos ou quer resolver tudo de uma vez.</p>
+            <dl><dt>Indicado para</dt><dd>Usuários de dentadura e casos extensos</dd><dt>Começa com</dt><dd>Tomografia e planejamento digital</dd></dl>
+            <dl><dt>Tempo médio</dt><dd>4 a 8 meses</dd><dt>Prótese provisória</dt><dd>Sim, durante o tratamento</dd></dl>
+          </div>
+        </details>
+        <details>
+          <summary><div><h3>Clareamento</h3><small>No consultório ou com moldeira em casa</small></div><span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary>
+          <div class="corpo">
+            <p>Deixa os dentes alguns tons mais claros com gel aplicado pelo dentista ou em casa, com moldeira feita sob medida. A sensibilidade é acompanhada em cada etapa.</p>
+            <dl><dt>Indicado para</dt><dd>Dentes naturais amarelados</dd><dt>Não clareia</dt><dd>Restaurações e coroas</dd></dl>
+            <dl><dt>Tempo médio</dt><dd>2 a 4 semanas</dd><dt>Consultas</dt><dd>2 a 3</dd></dl>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="consulta" id="avaliacao">
+    <div class="wrap">
+      <div class="cabeca">
+        <h2>A primeira consulta</h2>
+        <p class="intro">Você sai sabendo o que precisa ser feito, em quanto tempo e quanto custa. Sem compromisso de começar.</p>
+      </div>
+      <ol>
+        <li><h3>Conversa</h3><p>Você conta o que incomoda e o que espera do tratamento.</p></li>
+        <li><h3>Tomografia</h3><p>Exame clínico e imagem em 3D feitos aqui mesmo.</p></li>
+        <li><h3>Plano por escrito</h3><p>As opções, as etapas, os prazos e os valores.</p></li>
+        <li><h3>Você decide</h3><p>Leve o plano para casa e pense com calma.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="equipe" id="equipe">
+    <div class="wrap">
+      <h2>Quem cuida de você</h2>
+      <div class="grade">
+        <div class="pessoa"><div class="ini" aria-hidden="true">HP</div><div><h3>Dra. Helena Prado</h3><p>Implantodontia e prótese<br>CRO-SP 00.000, responsável técnica</p></div></div>
+        <div class="pessoa"><div class="ini" aria-hidden="true">RM</div><div><h3>Dr. Rafael Moura</h3><p>Dentística e estética<br>CRO-SP 00.000</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pacientes">
+    <div class="wrap">
+      <h2>Pacientes</h2>
+      <div class="nota"><b>4,9</b><span>no Google, com 210 avaliações</span></div>
+      <div class="depos">
+        <blockquote>“Eu tinha pavor de dentista. A Dra. Helena explicou cada etapa do implante antes de começar e fui tranquila em todas as consultas.”<footer>Marisa, paciente de implante</footer></blockquote>
+        <blockquote>“Saí da avaliação com o plano e os valores por escrito. Ninguém me pressionou a fechar na hora.”<footer>Carlos, paciente de lentes</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="wrap">
+      <h2>Dúvidas</h2>
+      <div class="faq">
+        <details><summary>Colocar implante dói?<span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>O procedimento é feito com anestesia local. Nos dias seguintes pode haver inchaço e desconforto, controlados com a medicação indicada pelo dentista.</p></details>
+        <details><summary>Quanto tempo dura um implante?<span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Depende da saúde da gengiva, da higiene e das consultas de manutenção. Com cuidado, costuma durar muitos anos.</p></details>
+        <details><summary>Quanto custa?<span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>O valor depende de quantos dentes, do tipo de prótese e se é preciso enxerto. Na avaliação você recebe o plano com os valores por escrito.</p></details>
+        <details><summary>Tenho medo de dentista. E agora?<span class="mais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5"/></svg></span></summary><p>Conte isso na primeira conversa. Explicamos cada passo antes de fazer e você pode pedir uma pausa a qualquer momento.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="agendar">
+    <div class="wrap">
+      <h2>Agende sua avaliação</h2>
+      <p class="intro">Mande uma mensagem dizendo o que você quer tratar. Respondemos com os horários livres da semana.</p>
+      <a class="btn" href="https://wa.me/?text=Ol%C3%A1!%20Quero%20agendar%20uma%20avalia%C3%A7%C3%A3o%20na%20Lumi%20Odontologia." target="_blank" rel="noopener">Agendar pelo WhatsApp<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></a>
+    </div>
+  </section>
+
+  <div class="info">
+    <div class="wrap">
+      <div><b>Endereço</b>Av. das Palmeiras, 840, sala 12, Centro</div>
+      <div><b>Horários</b>Segunda a sexta, 8h às 19h. Sábado, 8h às 12h</div>
+      <div><b>Responsável técnica</b>Dra. Helena Prado, CRO-SP 00.000</div>
+    </div>
+  </div>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <span>Lumi Odontologia</span>
+    <span>Página de demonstração feita pela DEVitor. Clínica, nomes, registros, números e avaliações são fictícios.</span>
+  </div>
+</footer>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+  import { iniciarImplante3D } from "./js/implante3d.js";
+  iniciarImplante3D({
+    tela: document.getElementById("tela"),
+    secao: document.getElementById("sequencia"),
+    barra: document.getElementById("barra"),
+    dica: document.getElementById("dica"),
+    contador: document.getElementById("contador"),
+    contNum: document.getElementById("contador-num"),
+    contNome: document.getElementById("contador-nome"),
+    etapas: [...document.querySelectorAll(".etapa")],
+    urlCoroa: "3d/coroa.glb",
+  });
+</script>
+</body>
+</html>
