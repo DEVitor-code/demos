@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Opala Odontologia | Implantes e lentes de porcelana em São Paulo</title>
   <meta name="description" content="Implantes, lentes de porcelana, clareamento e alinhadores planejados em 3D. Você vê o resultado na própria boca antes de qualquer desgaste. Agende sua avaliação.">
   <meta name="theme-color" content="#0E131A">
@@ -29,6 +29,8 @@
   <script type="importmap">
     { "imports": { "three": "./assets/vendor/three/three.module.min.js" } }
   </script>
+  <!-- Sem JavaScript a abertura não some sozinha: libera a página. -->
+  <noscript><style>.abertura { display: none; } body.carregando { overflow: auto; } body.carregando .topo { opacity: 1; }</style></noscript>
 </head>
 <body class="carregando">
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -82,13 +84,13 @@
         <div class="heroi__luz" aria-hidden="true"></div>
 
         <div class="heroi__texto">
-          <p class="heroi__local">Odontologia estética e implantes em São Paulo</p>
           <h1 class="heroi__titulo" id="heroi-titulo">Um&nbsp;sorriso que parece seu.</h1>
           <p class="heroi__apoio">Implantes, lentes de porcelana e alinhadores planejados em 3D. Você vê o resultado na própria boca antes de qualquer desgaste.</p>
           <div class="heroi__acoes">
             <a class="botao" href="#avaliacao" data-magnetico>Agendar avaliação</a>
             <a class="link-sublinhado" href="#metodo">Ver como funciona</a>
           </div>
+          <p class="heroi__local">Odontologia estética e implantes em São Paulo</p>
         </div>
 
         <p class="legenda legenda--1" aria-hidden="true">Proporção pensada para o seu rosto, não só para os dentes.</p>
@@ -408,6 +410,10 @@
           <button type="button" class="seta" data-anterior aria-label="Depoimento anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
           <div class="depoimentos__barras" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
           <button type="button" class="seta" data-proximo aria-label="Próximo depoimento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <button type="button" class="seta seta--pausa" data-pausa aria-pressed="false" aria-label="Pausar troca automática">
+            <svg class="icone-pausa" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+            <svg class="icone-tocar" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+          </button>
         </div>
       </div>
     </section>

@@ -73,9 +73,12 @@ ScrollTrigger.create({
 // Menu móvel
 const abrirMenu = $('.menu-movel__abrir');
 const menuMovel = $('#menu-movel');
+// Com o menu aberto, o resto da página não recebe foco nem leitor de tela.
+const atrasDoMenu = $$('main, footer');
 const fecharMenu = () => {
   abrirMenu.setAttribute('aria-expanded', 'false');
   menuMovel.hidden = true;
+  atrasDoMenu.forEach((el) => { el.inert = false; });
   doc.classList.remove('menu-aberto');
   lenis?.start();
 };
@@ -84,11 +87,12 @@ abrirMenu.addEventListener('click', () => {
   if (!abrir) return fecharMenu();
   abrirMenu.setAttribute('aria-expanded', 'true');
   menuMovel.hidden = false;
+  atrasDoMenu.forEach((el) => { el.inert = true; });
   doc.classList.add('menu-aberto');
   lenis?.stop();
   gsap.fromTo($$('a', menuMovel),
     { y: 30, autoAlpha: 0 },
-    { y: 0, autoAlpha: 1, stagger: 0.05, duration: 0.7, ease: 'opala', overwrite: true });
+    { y: 0, autoAlpha: 1, stagger: 0.05, duration: reduzir ? 0.01 : 0.7, ease: 'opala', overwrite: true });
 });
 menuMovel.addEventListener('click', (e) => {
   const link = e.target.closest('a');
@@ -97,7 +101,11 @@ menuMovel.addEventListener('click', (e) => {
   fecharMenu();
   irPara(link.getAttribute('href'));
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menuMovel.hidden) fecharMenu(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape' || menuMovel.hidden) return;
+  fecharMenu();
+  abrirMenu.focus();
+});
 
 /* ------------------------------------------------------------------ */
 /* 1. Herói — o sorriso acontece conforme a página desce               */
@@ -225,7 +233,8 @@ const moldura = $('[data-moldura]');
 let midiaAtiva = 'implantes';
 let molduraVisivel = false;
 
-const tocar = (el) => { if (el?.tagName === 'VIDEO') el.play().catch(() => {}); };
+// Com movimento reduzido os vídeos ficam no pôster, sem tocar sozinhos.
+const tocar = (el) => { if (!reduzir && el?.tagName === 'VIDEO') el.play().catch(() => {}); };
 const pausar = (el) => { if (el?.tagName === 'VIDEO') el.pause(); };
 
 function trocarMidia(nome) {
@@ -405,7 +414,7 @@ mm.add('(min-width: 960px)', () => {
 // Vídeos das etapas e do contato tocam só quando aparecem.
 const observadorVideo = new IntersectionObserver((entradas) => {
   entradas.forEach((en) => {
-    if (en.isIntersecting) en.target.play().catch(() => {});
+    if (en.isIntersecting && !reduzir) en.target.play().catch(() => {});
     else en.target.pause();
   });
 }, { threshold: 0.15 });
@@ -435,6 +444,7 @@ $$('.pessoa__foto img').forEach((img) => {
   let relogio = null;
   let visivel = false;
   let pausado = false;
+  let pausadoManual = false;
 
   function mostrar(i, direcao = 1) {
     const anterior = atual;
@@ -459,14 +469,27 @@ $$('.pessoa__foto img').forEach((img) => {
       scaleX: 1,
       duration: DURACAO,
       ease: 'none',
-      paused: !visivel || pausado,
+      paused: !visivel || pausado || pausadoManual,
       onComplete: () => mostrar(atual + 1),
     });
   }
   const sincronizar = () => {
     if (!relogio) return;
-    if (visivel && !pausado) relogio.resume(); else relogio.pause();
+    if (visivel && !pausado && !pausadoManual) relogio.resume(); else relogio.pause();
   };
+
+  // Botão de pausa: a troca automática dura mais de 5 s e não pode depender só do mouse.
+  const botaoPausa = $('[data-pausa]');
+  if (reduzir) {
+    botaoPausa.hidden = true;
+  } else {
+    botaoPausa.addEventListener('click', () => {
+      pausadoManual = !pausadoManual;
+      botaoPausa.setAttribute('aria-pressed', String(pausadoManual));
+      botaoPausa.setAttribute('aria-label', pausadoManual ? 'Retomar troca automática' : 'Pausar troca automática');
+      sincronizar();
+    });
+  }
 
   $('[data-proximo]').addEventListener('click', () => mostrar(atual + 1, 1));
   $('[data-anterior]').addEventListener('click', () => mostrar(atual - 1, -1));
